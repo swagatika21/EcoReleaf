@@ -1,0 +1,31 @@
+.footer {
+    background: url('../Images/leafbg.png');
+    line-height: 2;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.footer-icon i {
+    margin: 0 10px;
+}
+
+.footer-text {
+    font-size: 17px;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .footer-icon {
+        margin: 0;
+    }
+
+    .footer-text {
+        margin: 10px 0;
+    }
+}

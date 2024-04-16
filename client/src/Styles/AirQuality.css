@@ -1,0 +1,86 @@
+.container-aq {
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px; 
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .remark {
+    margin: 10px;
+    font-weight: bold;
+    background-color: #FF6347; 
+    border-radius: 10px;
+    padding: 15px;
+    width: 150px;
+    max-width: 100%;
+  }
+  
+  .btn-aqi {
+    margin-top: 20px;
+    border-radius: 50%;
+    border: none;
+    color: #ffffff;
+    background-color: #06545d;
+    cursor: pointer;
+    padding: 15px;
+    font-size: 24px; 
+    margin: 10px; 
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .btn-aqi:hover {
+    background-color: #86afaf;
+    box-shadow: 0px 19px 38px rgba(0, 0, 0, 0.3), 0px 15px 12px rgba(0, 0, 0, 0.22);
+  }
+  
+  .poll-level {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px; 
+  }
+  
+  .pollutant {
+    background-color: #285430;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    flex: 1;
+    margin-left: 10px;
+  }
+  
+  .pollutant span {
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .fields {
+    width: 80px;
+    height: 80px;
+    background-color: #a4be7b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 18px;
+  }
+  
+  .fields:hover {
+    transform: scale(1.05);
+  }
+  

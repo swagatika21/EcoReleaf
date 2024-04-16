@@ -1,0 +1,73 @@
+
+.login-container {
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 30px;
+  border: 1px solid #a4be7b;
+  color: #285430;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #fff;
+  /* background-image: url('../Images/leafbg.png'); */
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 20px;
+  color: #285430;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+input {
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #a4be7b;
+  border-radius: 8px;
+  outline-color: #a4be7b;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #285430;
+}
+
+button {
+  margin-top: 30px;
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #285430;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #a4be7b;
+}
+
+.login-alt {
+  color: #011e31;
+  font-weight: bold;
+  padding: 10px;
+  margin-top: 16px;
+}
+
+.login-alt :hover {
+  text-decoration: underline;
+  color: #053352;
+}
+
+.login-alt a {
+  text-decoration: none;
+  color: #011e31;
+}

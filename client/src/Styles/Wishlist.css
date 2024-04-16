@@ -1,0 +1,121 @@
+/* Add this CSS to your external stylesheet or in your React component using className */
+
+
+  .wishlist-item {
+    padding: 7px;
+    display: flex;
+    background-color: #011e31;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: 0.3s ease;
+  }
+  
+  .wishlist-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  .wishlist-info {
+    padding: 10px;
+
+    p{
+      margin: 0;
+      margin-top: 10px;
+    }
+  }
+  
+  .wishlist-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
+  
+  .delete-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .delete-btn:hover {
+    background-color: #ff5252;
+  }
+  
+
+
+  .plant-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .wishlist-image {
+  width: 100px;
+  height: 100px; 
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  }
+  
+  
+
+  .plant-details h3 {
+    margin: 0; 
+  }
+  .nursery-info {
+    flex: 1; 
+    background-color: #fff;
+    color: #011e31;
+    padding: 20px;
+    margin: 20px; 
+    border-radius: 10px;
+  }
+  .plant-image {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+  }
+  
+  .plant-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .plant-info {
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .plant-info h3 {
+    font-size: 1.2rem;
+    margin: 0 0 10px 0;
+    color: #333;
+  }
+  
+  .plant-info p {
+    margin: 0;
+    color: #555;
+  }
+
+  .empty-wishlist {
+    text-align: center;
+    margin-top: 50px;
+    padding: 10px;
+    font-size: 30px;
+    margin: 30px;
+    color: #285430;
+  }
+  
+  .empty-wishlist img {
+    width: 150px;
+    padding: 10px;
+    margin: 30px;
+    margin-bottom: 20px;
+    
+  }
+  
