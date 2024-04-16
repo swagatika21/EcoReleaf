@@ -2,13 +2,11 @@
 import { useState, useEffect } from "react";
 import "../Styles/AirQuality.css";
 // import Navbar from "./Navbar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavbarWithLogin from "./NavbarWithLogin";
-
-const urlLocation = `https://api.openweathermap.org/geo/1.0/zip?zip=768018,IN&appid=0223c39a61c5120938eb1733b306d0b1`;
 
 const AirQuality = () => {
   const [name, setName] = useState();
@@ -17,6 +15,13 @@ const AirQuality = () => {
   const [pin, setPin] = useState();
   const navigate = useNavigate();
   let longitude, latitude;
+  const loc = useLocation();
+  const data = loc.state;
+  const urlLocation = `https://api.openweathermap.org/geo/1.0/zip?zip=${
+    data ? data.pincode : 755050
+  },IN&appid=0223c39a61c5120938eb1733b306d0b1`;
+
+  //  console.log(data);
 
   useEffect(() => {
     const fetch = async () => {
@@ -145,36 +150,35 @@ const AirQuality = () => {
           {status}
         </div>
         <div className="poll-level">
-  <div className="row">
-    <div className="pollutant">
-      <span>Carbon Monoxide (CO)</span>
-      <div className="fields">{aqi.co}</div>
-    </div>
-    <div className="pollutant">
-      <span>Nitrogen Monoxide (NO)</span>
-      <div className="fields">{aqi.no}</div>
-    </div>
-    <div className="pollutant">
-      <span>Nitrogen Dioxide (NO2)</span>
-      <div className="fields">{aqi.no2}</div>
-    </div>
-  </div>
-  <div className="row">
-    <div className="pollutant">
-      <span>Ozone (O3)</span>
-      <div className="fields">{aqi.o3}</div>
-    </div>
-    <div className="pollutant">
-      <span>Sulphur Dioxide (SO2)</span>
-      <div className="fields">{aqi.so2}</div>
-    </div>
-    <div className="pollutant">
-      <span>Ammonia</span>
-      <div className="fields">{aqi.nh3}</div>
-    </div>
-  </div>
-</div>
-
+          <div className="row">
+            <div className="pollutant">
+              <span>Carbon Monoxide (CO)</span>
+              <div className="fields">{aqi.co}</div>
+            </div>
+            <div className="pollutant">
+              <span>Nitrogen Monoxide (NO)</span>
+              <div className="fields">{aqi.no}</div>
+            </div>
+            <div className="pollutant">
+              <span>Nitrogen Dioxide (NO2)</span>
+              <div className="fields">{aqi.no2}</div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="pollutant">
+              <span>Ozone (O3)</span>
+              <div className="fields">{aqi.o3}</div>
+            </div>
+            <div className="pollutant">
+              <span>Sulphur Dioxide (SO2)</span>
+              <div className="fields">{aqi.so2}</div>
+            </div>
+            <div className="pollutant">
+              <span>Ammonia</span>
+              <div className="fields">{aqi.nh3}</div>
+            </div>
+          </div>
+        </div>
 
         <div className="d-flex">
           <Tooltip title="Recommendation" placement="top">
@@ -182,7 +186,8 @@ const AirQuality = () => {
               className="btn-aqi"
               onClick={() => navigate("/plantrecom", { state: { name } })}
             >
-<i className="fa-solid fa-seedling"></i>            </button>
+              <i className="fa-solid fa-seedling"></i>{" "}
+            </button>
           </Tooltip>
           <Tooltip title="Add to Pollution History" placement="top">
             <button className="btn-aqi " onClick={handlePollutionHistory}>

@@ -42,6 +42,8 @@ export default function UserDet() {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
+  // console.log(values);
+
   const handleValidation = () => {
     console.log("validate");
     const { email, password, confirmPassword } = values;
@@ -101,7 +103,7 @@ export default function UserDet() {
       }
       if (data.status === true) {
         localStorage.setItem("user-app", JSON.stringify(data.user));
-        navigate("/airquality");
+        navigate("/airquality",{state:values});
       }
     }
   };
