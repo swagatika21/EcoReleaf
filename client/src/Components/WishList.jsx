@@ -44,15 +44,15 @@ const WishList = () => {
       <div className="row">
         {wishlistItems.map((plant) => (
           <div key={plant.id} className="col-md-6">
-            <div className="wishlist-item">
-              <div className="wishlist-info">
+            <div className="wishlist-item w-75 m-2 mx-auto mt-3">
+              <div className="wishlist-info  text-center">
                  <div className="plant-image">
-                    <img src={plant.image} alt="plant" />
+                    <img src={plant.image} alt="plant" className="plant-img" />
                   </div>
-                  <p><strong>Name: </strong>{plant.name}</p>
-                  <p><strong><i className="fa-solid fa-sun
-                  "></i> </strong>{plant.Sunlight}</p>
-                  <p><strong> <i className="fa-solid fa-droplet"></i></strong>{plant.water}</p>
+                  <p><strong>{plant.name}</strong></p>
+                  <p><i className="fa-solid fa-sun p-2
+                  "></i>{plant.Sunlight}</p>
+                  <p><i className="fa-solid fa-droplet p-2"></i>{plant.water}</p>
                 <button className="delete-btn" onClick={() => handleDelete(plant.Id)}>Delete</button>
               </div>
             </div>
