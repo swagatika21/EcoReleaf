@@ -1,9 +1,11 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
 import NavbarWithLogin from "./NavbarWithLogin";
+import {  useNavigate } from "react-router-dom";
 
 const PollutionHistory = () => {
   const [pollutionHistory, setPollutionHistory] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Retrieve pollution history from session storage
@@ -98,15 +100,47 @@ const PollutionHistory = () => {
     });
   };
 
+  const clearHistory = () => {
+    localStorage.removeItem("pollution_history");
+    setPollutionHistory([]);
+  };
+
+  const viewAQI = () => {
+    navigate("/airquality"); 
+   };
+
   return (
     <>
-          <NavbarWithLogin />
-          <div className="card p-2 m-3">
-      <h2 className="text-center">Pollution History</h2>
-      <canvas id="pollutionChart" style={{ maxHeight:"500px" }} />
-    </div>
+      <NavbarWithLogin />
+      <div className="text-center mt-4">
+        <h3>Pollution History</h3>
+      </div>
+
+      <div className="card p-2 m-3 w-75 mx-auto">
+        {pollutionHistory.length > 0 ? (
+          <>
+            <canvas id="pollutionChart" style={{ maxHeight: "500px" }} />
+            <div className=" mt-3 mb-2 mx-auto d-block">
+              <button className="btn btn-outline-danger" onClick={clearHistory}>
+              <i className="fa-solid fa-trash m-2"></i>
+                Clear History
+              </button>
+              <button className=" ms-2 btn btn-outline-dark" onClick={viewAQI}>
+              <i className="fa-solid fa-smog m-2"></i>
+                View AQI Info
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="text-center mt-3">
+            <p>No pollution history available.</p>
+            <button className="btn btn-outline-dark" onClick={viewAQI}>
+                View AQI Info
+              </button>
+          </div>
+        )}
+      </div>
     </>
-  
   );
 };
 

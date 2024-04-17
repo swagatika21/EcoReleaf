@@ -1,6 +1,6 @@
 /* Styles.css (or your preferred CSS file) */
 .centered-content{
-    background-color: #011e31;
+    /* background-color: #011e31; */
     height: 100vh;
 }
 
@@ -84,12 +84,19 @@
   
   .recomm-btn {
   border-radius: 5px;
-  padding: 5px;
+  padding: 9px;
   margin: 10px;
   font-weight: bold;
   border: none;
-  background-color:#fff;
-  color:#011e31;
+  background-color:#011e31;
+  color:#fff;
   font-size: 16px;
   }
+
+  .recomm-btn:hover {
+    border-radius: 5px;
+    background-color:#fff;
+    color:#9c9d9e;
+    font-size: 16px;
+    }
   
