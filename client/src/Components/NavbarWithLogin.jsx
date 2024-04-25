@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Styles/Navbar.css";
+import Context from "../context/Context";
 
 function NavbarWithLogin() {
   const navigate = useNavigate();
+  const contextData=useContext(Context)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -12,6 +14,7 @@ function NavbarWithLogin() {
 
   const handleLogout = () => {
     localStorage.clear();
+    contextData.setLogin(false)
     navigate("/");
   };
 

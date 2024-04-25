@@ -1,18 +1,22 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Landing.css";
 import ProdDesc from "./ProdDesc";
 import Footer from "./Footer";
 import NavbarWithoutLogin from "./NavbarWithoutLogin";
+import NavbarWithLogin from "./NavbarWithLogin";
+import Context from "../context/Context";
 
 function Landing() {
   const navigate = useNavigate();
+  const contextData = useContext(Context);
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <>
-      <NavbarWithoutLogin />
+      {contextData.login ? <NavbarWithLogin /> : <NavbarWithoutLogin />}
       <section id="top">
         <div className="container-top">
           <img
@@ -29,18 +33,23 @@ function Landing() {
               Join EcoReleaf as we try to combat pollution by making the earth a
               more green place.
             </p>
-            <div>
-              <h2>JOIN US AS </h2>
-              <button className="join-btn" onClick={() => navigate("/signup")}>
-                CONTRIBUTOR
-              </button>
-              <button
-                className="join-btn"
-                onClick={() => navigate("/nurserysignup")}
-              >
-                NURSERY OWNER
-              </button>
-            </div>
+            {!contextData.login && (
+              <div>
+                <h2>JOIN US AS </h2>  
+                <button
+                  className="join-btn"
+                  onClick={() => navigate("/signup")}
+                >
+                  CONTRIBUTOR
+                </button>
+                <button
+                  className="join-btn"
+                  onClick={() => navigate("/nurserysignup")}
+                >
+                  NURSERY OWNER
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>

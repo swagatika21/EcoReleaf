@@ -4,11 +4,13 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "../Styles/NurseryDet.css";
 import { nRegisterRoute } from "../utils/APIRoutes";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NavbarWithoutLogin from "./NavbarWithoutLogin";
+import Context from "../context/Context";
 
 export default function NurseryDet() {
   const navigate = useNavigate();
+  const contextData=useContext(Context)
   const [values, setValues] = useState({
     nurseryname: "",
     ownername: "",
@@ -105,6 +107,7 @@ export default function NurseryDet() {
       }
       if (data.status === true) {
         localStorage.setItem("nursery-app", JSON.stringify(data.user));
+        contextData.setLogin("true")
         navigate("/nurseryprofile");
       }
     }

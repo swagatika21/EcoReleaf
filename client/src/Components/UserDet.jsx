@@ -3,11 +3,12 @@ import "../Styles/UserDet.css";
 // import Navbar from "./Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { registerRoute } from "../utils/APIRoutes";
 import NavbarWithoutLogin from "./NavbarWithoutLogin";
+import Context from "../context/Context";
 
 export default function UserDet() {
   const navigate = useNavigate();
@@ -60,6 +61,8 @@ export default function UserDet() {
     return true;
   };
 
+  const contextData=useContext(Context)
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("submit");
@@ -103,6 +106,7 @@ export default function UserDet() {
       }
       if (data.status === true) {
         localStorage.setItem("user-app", JSON.stringify(data.user));
+        contextData.setLogin(true)
         navigate("/airquality",{state:values});
       }
     }

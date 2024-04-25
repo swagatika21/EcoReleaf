@@ -1,15 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import "../Styles/Login.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { loginRoute } from "../utils/APIRoutes";
 // import Navbar from "./Navbar";
 import NavbarWithoutLogin from "./NavbarWithoutLogin";
+import Context from "../context/Context";
 
 const Login = () => {
   const navigate = useNavigate();
+  const contextData=useContext(Context)
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -64,6 +66,7 @@ const Login = () => {
       }
       if (data.status === true) {
         localStorage.setItem("user-app", JSON.stringify(data.user));
+        contextData.setLogin("true")
         navigate("/airquality");
       }
     }
