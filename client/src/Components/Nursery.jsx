@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import "../Styles/Nursery.css";
 import NavbarWithLogin from "./NavbarWithLogin";
@@ -49,43 +50,41 @@ export default function Nursery() {
           {filteredData &&
             filteredData.map((d, index) => (
               <div className="col-md-6 text-center" key={index}>
-                <div className="nursery-desc">
+                <div className="nursery-desc d-flex">
                   <div className="n-img-container">
                     <img
                       src="../Images/dam.png"
                       alt="plant"
-                      className="n-img"
                     />
                   </div>
                   <div className="n-info">
                     <h2>{d.nurseryname}</h2>
                     <div className="n-details">
                       <div className="n-detail">
-                        <i className="fa-solid fa-address-card n-icon fa-2xl"></i>
                         <span>Address:</span> {d.address}
                       </div>
-                      <div className="n-detail">
-                        <i className="fa-solid fa-square-phone n-icon fa-2xl"></i>
-                        <span>Phone:</span> {d.phone}
-                      </div>
-                      <div className="n-detail">
-                        <i className="fa-solid fa-location-dot n-icon fa-2xl"></i>
-                        <span className="text-light">
-                          <a href={d.location}>View Location</a>
-                        </span>
-                      </div>
-                      <div className="n-detail">
+      
+
+                      <div className="n-detail d-flex">
                         <button
                           onClick={() =>
                             navigate(`/nurseryDetails/${d._id}`)
                           }
                         >
-                          VIEW DETAILS
+                          View Details
                         </button>
+                        <span className="text-light">
+                          <button className="ms-2">
+                          <a href={d.location}>View Location</a>{" "}
+                          </button>
+                        </span>
                       </div>
+
                     </div>
                   </div>
+                  
                 </div>
+                
               </div>
             ))}
         </div>

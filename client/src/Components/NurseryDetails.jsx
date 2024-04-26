@@ -74,10 +74,10 @@ const NurseryDetails = () => {
       <div className="Nursery-det-container">
         <div className="nursery-img">
           <img src="../Images/dam.png" alt="plant" />
+          <h4 className="text-center">{nurseryDetails && nurseryDetails.nurseryname}</h4>
         </div>
 
         <div className="nursery-det">
-        <h2>{nurseryDetails && nurseryDetails.nurseryname}</h2>
           <div className="n-details">
             <div className="ny-detail">
               <i className="fa-solid fa-address-card n-icon fa-xl"></i>
@@ -113,11 +113,11 @@ const NurseryDetails = () => {
               <i className="fa-solid fa-location-dot n-icon fa-xl"></i>
               <span>View Location:</span>
               <a href={nurseryDetails && nurseryDetails.location}>
-                VIEW
+                View
               </a>
             </div>
           </div>
-          <div className="btn btn-outline-success" onClick={Viewnursery}>
+          <div className="btn btn-outline-success mx-auto d-block w-50 mt-3" onClick={Viewnursery}>
             View More Nursery
           </div>
         </div>
