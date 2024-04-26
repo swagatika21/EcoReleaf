@@ -16,7 +16,7 @@ function Landing() {
 
   return (
     <>
-      {contextData.login ? <NavbarWithLogin /> : <NavbarWithoutLogin />}
+      {JSON.parse(localStorage.getItem("user-app")) ? <NavbarWithLogin /> : <NavbarWithoutLogin />}
       <section id="top">
         <div className="container-top">
           <img
@@ -33,7 +33,7 @@ function Landing() {
               Join EcoReleaf as we try to combat pollution by making the earth a
               more green place.
             </p>
-            {!contextData.login && (
+            {!JSON.parse(localStorage.getItem("user-app")) && (
               <div>
                 <h2>JOIN US AS </h2>  
                 <button

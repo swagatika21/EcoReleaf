@@ -66,6 +66,7 @@ const Login = () => {
       }
       if (data.status === true) {
         localStorage.setItem("user-app", JSON.stringify(data.user));
+        const loginData=JSON.parse(localStorage.getItem("user-app"))
         contextData.setLogin("true")
         navigate("/airquality");
       }

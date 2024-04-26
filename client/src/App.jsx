@@ -17,18 +17,22 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/signup" element={<UserDet />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/nurserysignup" element={<NurseryDet />} />
-        <Route path="/airquality" element={<AirQuality />} />
-        <Route path="/plantrecom" element={<PlantRecomm />} />
-        <Route path="/nursery" element={<Nursery />} />
-        <Route path="/UserProfile" element={<UserProfile />} />
-        <Route path="/nurseryprofile" element={<NurseryProfile />} />
-        <Route path="/wishlist" element={<WishList />} />
-        <Route path="/nurseryDetails/:nurseryId" element={<NurseryDetails />} />
-        <Route path="/pollution-history" element={<PollutionHistory />} />
+        <Route exact path="/" element={<Landing />} />
+        <Route exact path="/signup" element={<UserDet />} />
+        <Route  path="/login" element={<Login />} />
+        <Route exact path="/nurserysignup" element={<NurseryDet />} />
+        <Route exact path="/airquality" element={<AirQuality />} />
+        <Route exact path="/plantrecom" element={<PlantRecomm />} />
+        <Route exact path="/nursery" element={<Nursery />} />
+        <Route exact path="/UserProfile" element={<UserProfile />} />
+        <Route exact path="/nurseryprofile" element={<NurseryProfile />} />
+        <Route exact path="/wishlist" element={<WishList />} />
+        <Route
+          exact
+          path="/nurseryDetails/:nurseryId"
+          element={<NurseryDetails />}
+        />
+        <Route exact path="/pollution-history" element={<PollutionHistory />} />
       </Routes>
     </BrowserRouter>
   );

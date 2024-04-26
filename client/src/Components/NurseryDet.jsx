@@ -10,7 +10,7 @@ import Context from "../context/Context";
 
 export default function NurseryDet() {
   const navigate = useNavigate();
-  const contextData=useContext(Context)
+  const contextData = useContext(Context);
   const [values, setValues] = useState({
     nurseryname: "",
     ownername: "",
@@ -23,9 +23,9 @@ export default function NurseryDet() {
     city: "",
     location: "",
     price: "",
-    delivery:"",
-    pincodeNursery:"",
-    profNursery:""
+    delivery: "",
+    pincodeNursery: "",
+    profNursery: "",
   });
 
   const toastOptions = {
@@ -39,12 +39,11 @@ export default function NurseryDet() {
   useEffect(() => {
     // console.log(localStorage.getItem("nursery-app"));
     if (localStorage.getItem("nursery-app")) {
-    
       navigate("/nursery");
-    }
-    else{
-      navigate("/login")
-    }
+    } 
+    // else {
+    //   navigate("/login");
+    // }
   }, []);
 
   const handleChange = (event) => {
@@ -84,7 +83,7 @@ export default function NurseryDet() {
         price,
         delivery,
         pincodeNursery,
-        profNursery
+        profNursery,
       } = values;
 
       const selectedCheckboxes = Array.from(
@@ -107,7 +106,7 @@ export default function NurseryDet() {
           price,
           delivery,
           pincodeNursery,
-          profNursery
+          profNursery,
         },
         {
           withCredentials: true,
@@ -118,7 +117,6 @@ export default function NurseryDet() {
       }
       if (data.status === true) {
         localStorage.setItem("nursery-app", JSON.stringify(data.user));
-        contextData.setLogin("true")
         navigate("/nurseryprofile");
       }
     }
@@ -132,183 +130,184 @@ export default function NurseryDet() {
           <img src="../Images/nurseryimg.png" alt="Form image" />
         </div>
         <form action="" onSubmit={(e) => handleSubmit(e)}>
-          
-            <div className="nursery-icon">
-              <i className="fa-brands fa-4x fa-pagelines"></i>
+          <div className="nursery-icon">
+            <i className="fa-brands fa-4x fa-pagelines"></i>
+          </div>
+
+          <div className="head">NURSERY DETAILS</div>
+          <div className="form-body nursery-basic">
+            <div className="inp-field">
+              <label htmlFor="Nname">Nursery Name</label>
+              <input
+                type="text"
+                name="nurseryname"
+                placeholder="Enter Nursery Name"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+            <div className="inp-field">
+              <label htmlFor="ownername">Owner Name</label>
+              <input
+                type="text"
+                name="ownername"
+                placeholder="Enter Owner Name"
+                onChange={(e) => handleChange(e)}
+                required
+              />
             </div>
 
-            <div className="head">NURSERY DETAILS</div>
-            <div className="form-body nursery-basic">
-              
-                <div className="inp-field">
-                  <label htmlFor="Nname">Nursery Name</label>
-                  <input
-                    type="text"
-                    name="nurseryname"
-                    placeholder="Enter Nursery Name"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-                <div className="inp-field">
-                  <label htmlFor="ownername">Owner Name</label>
-                  <input
-                    type="text"
-                    name="ownername"
-                    placeholder="Enter Owner Name"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-
-                <div className="inp-field">
-                  <label htmlFor="Phonenum">Phone Number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Enter Phone Number"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-                <div className="inp-field">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter Email"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-                <div className="inp-field">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter Password"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-                <div className="inp-field">
-                  <label htmlFor="confirmPwd">Confirm Password</label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-
-                <div className="inp-field">
-                  <label htmlFor="addr">Address</label>
-                  <input
-                    type="text"
-                    name="address"
-                    placeholder="Enter address"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-                <div className="inp-field">
-                  <label htmlFor="state">State</label>
-                  <input
-                    type="text"
-                    name="state"
-                    placeholder="Enter State"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-                <div className="inp-field">
-                  <label htmlFor="city">City</label>
-                  <input
-                    type="text"
-                    name="city"
-                    placeholder="Enter City"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-                <div className="inp-field">
-                  <label htmlFor="pincodeNursery">Pin code</label>
-                  <input
-                    type="text"
-                    name="pincodeNursery"
-                    placeholder="Enter Pin code"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-                <div className="inp-field">
-                  <label>Plant Speciality</label>
-                  <div className="checkbox-group">
-                    <label>
-                      <input type="checkbox" value="Herbal Plants" />
-                      Herbal Plants
-                    </label>
-                    <label>
-                      <input type="checkbox" value="Floral Plants" />
-                      Floral Plants
-                    </label>
-                    <label>
-                      <input type="checkbox" value="Vegetables" />
-                      Vegetables
-                    </label>
-                    <label>
-                      <input type="checkbox" value="Others" />
-                      Others
-                    </label>
-                  </div>
-                </div>
-
-                <div className="inp-field">
-                  <label htmlFor="photo">Upload Plant/Nursery Photo</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="photo"
-                    name="profNursery"
-                  />
-                </div>
-
-                <div className="inp-field">
-                  <label htmlFor="google-loc">Enter Google location</label>
-                  <input
-                    type="text"
-                    id="google-loc"
-                    name="location"
-                    placeholder="https://maps.app.goo.gl/ABC"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-
-                <div className="inp-field">
-                  <label htmlFor="Delivery">Do you deliver</label>
-                  <select name="delivery" onChange={(e) => handleChange(e)} required>
-                    <option>Choose an option</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                  </select>
-                </div>
-                <div className="inp-field">
-                  <label htmlFor="price-range">Enter Price range</label>
-                  <input
-                    type="tel"
-                    id="price-range"
-                    name="price"
-                    placeholder="eg Rs 300 - 400"
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </div>
-             
-
-              <button className="reg">ENLIST NURSERY</button>
+            <div className="inp-field">
+              <label htmlFor="Phonenum">Phone Number</label>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Enter Phone Number"
+                onChange={(e) => handleChange(e)}
+                required
+              />
             </div>
+            <div className="inp-field">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+            <div className="inp-field">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter Password"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+            <div className="inp-field">
+              <label htmlFor="confirmPwd">Confirm Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+
+            <div className="inp-field">
+              <label htmlFor="addr">Address</label>
+              <input
+                type="text"
+                name="address"
+                placeholder="Enter address"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+            <div className="inp-field">
+              <label htmlFor="state">State</label>
+              <input
+                type="text"
+                name="state"
+                placeholder="Enter State"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+            <div className="inp-field">
+              <label htmlFor="city">City</label>
+              <input
+                type="text"
+                name="city"
+                placeholder="Enter City"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+            <div className="inp-field">
+              <label htmlFor="pincodeNursery">Pin code</label>
+              <input
+                type="text"
+                name="pincodeNursery"
+                placeholder="Enter Pin code"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+            <div className="inp-field">
+              <label>Plant Speciality</label>
+              <div className="checkbox-group">
+                <label>
+                  <input type="checkbox" value="Herbal Plants" />
+                  Herbal Plants
+                </label>
+                <label>
+                  <input type="checkbox" value="Floral Plants" />
+                  Floral Plants
+                </label>
+                <label>
+                  <input type="checkbox" value="Vegetables" />
+                  Vegetables
+                </label>
+                <label>
+                  <input type="checkbox" value="Others" />
+                  Others
+                </label>
+              </div>
+            </div>
+
+            <div className="inp-field">
+              <label htmlFor="photo">Upload Plant/Nursery Photo</label>
+              <input
+                type="file"
+                accept="image/*"
+                id="photo"
+                name="profNursery"
+              />
+            </div>
+
+            <div className="inp-field">
+              <label htmlFor="google-loc">Enter Google location</label>
+              <input
+                type="text"
+                id="google-loc"
+                name="location"
+                placeholder="https://maps.app.goo.gl/ABC"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+
+            <div className="inp-field">
+              <label htmlFor="Delivery">Do you deliver</label>
+              <select
+                name="delivery"
+                onChange={(e) => handleChange(e)}
+                required
+              >
+                <option>Choose an option</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+            <div className="inp-field">
+              <label htmlFor="price-range">Enter Price range</label>
+              <input
+                type="tel"
+                id="price-range"
+                name="price"
+                placeholder="eg Rs 300 - 400"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
+
+            <button className="reg">ENLIST NURSERY</button>
+          </div>
         </form>
       </div>
       <ToastContainer />

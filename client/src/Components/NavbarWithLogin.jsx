@@ -12,7 +12,7 @@ function NavbarWithLogin() {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const handleLogout = () => {
+  const handleLogout = () => {  
     localStorage.clear();
     contextData.setLogin(false)
     navigate("/");
