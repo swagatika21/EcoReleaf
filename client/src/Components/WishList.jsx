@@ -54,7 +54,7 @@ const WishList = () => {
       <div className="row">
         {wishlistItems.map((plant) => (
           <div key={plant.id} className="col-md-6">
-            <div className="wishlist-item w-75 m-2 mx-auto mt-3">
+            <div className="wishlist-item w-50 m-2 mx-auto mt-3">
               <div className="wishlist-info  text-center">
                 <div className="plant-image">
                   <img src={plant.image} alt="plant" className="plant-img" />

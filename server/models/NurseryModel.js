@@ -38,21 +38,32 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  pincode: {
+    type: String,
+    required: true,
+  },
   selectedCheckboxes: {
     type: [String],
     default: [],
   },
   location: {
     type: String,
+    required: true,
   },
 
   delivery: {
     type: String,
     enum: ["Yes", "No"],
-  },
+    required: true,
 
+  },
+  profNursery:{
+    data: Buffer,
+    contentType: String, 
+  },
   priceRange: {
     type: String,
+    required: true,
   },
 }, {
   timestamps: true

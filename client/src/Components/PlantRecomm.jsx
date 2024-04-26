@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import NavbarWithLogin from "./NavbarWithLogin";
 import "../Styles/PlantRecomm.css";
 import { FaLeaf } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const PlantRecommendation = () => {
   const { state } = useLocation();
@@ -13,11 +14,15 @@ const PlantRecommendation = () => {
   const [jsonData, setJsonData] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const navigate = useNavigate();
-  const [selectedSuitability, setSelectedSuitability] = useState("");
+  const { i18n } = useTranslation();
+  const { t } = useTranslation();
 
-  const handleSuitabilityChange = (event) => {
-    setSelectedSuitability(event.target.value);
+  const changeLanguage = (e) => {
+    const lang = e.target.value;
+    console.log("Selected Language:", lang);
+    i18n.changeLanguage(lang);
   };
+ 
   useEffect(() => {
     const fetchUserPreferences = async () => {
       if (!localStorage.getItem("user-app")) {
@@ -78,17 +83,13 @@ const PlantRecommendation = () => {
         <div className="recomm-info">
           <div className="info">Area: {nameFromAirQuality}</div>
           <div className="">
-          <select
-            className="form-select"
-            value={selectedSuitability}
-            onChange={handleSuitabilityChange}
-          >
-            <option value="">Select Suitability</option>
-            <option value="Balcony">Balcony</option>
-            <option value="Garden">Garden</option>
-            <option value="Farm">Farm</option>
-          </select>
-        </div>
+          
+            <select onChange={changeLanguage} className="form-select">
+              <option value="en">English</option>
+              <option value="hi">HIndi</option>
+              <option value="or">Odia</option>
+            </select>
+          </div>
         </div>
         <div className="plant-container">
           {jsonData
@@ -100,7 +101,8 @@ const PlantRecommendation = () => {
                   <div className="plant-image">
                     <img src={plant.image} alt="plant" />
                   </div>
-                  <p>{plant.name}</p>
+                  {/* <p>{plant.name}</p> */}
+                  <p>{t(plant.name)}</p>
                   <p className="rating">{renderRating(plant.Rating)}</p>
                 </div>
                 <button

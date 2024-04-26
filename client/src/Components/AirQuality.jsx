@@ -17,11 +17,7 @@ const AirQuality = () => {
   let longitude, latitude;
   const loc = useLocation();
   const data = loc.state;
-  const urlLocation = `https://api.openweathermap.org/geo/1.0/zip?zip=${
-    data ? data.pincode : 755050
-  },IN&appid=0223c39a61c5120938eb1733b306d0b1`;
-
-  //  console.log(data);
+  console.log(data, "data");
 
   useEffect(() => {
     const fetch = async () => {
@@ -36,6 +32,12 @@ const AirQuality = () => {
   }, []);
 
   useEffect(() => {
+    const p = JSON.parse(localStorage.getItem("user-app"));
+    console.log("pin", p.pincode);
+    const urlLocation = `https://api.openweathermap.org/geo/1.0/zip?zip=${
+      p ? p.pincode : 755050
+    },IN&appid=0223c39a61c5120938eb1733b306d0b1`;
+
     const api = async () => {
       const res = await fetch(urlLocation);
       const data = await res.json();
@@ -43,6 +45,8 @@ const AirQuality = () => {
       longitude = data.lon;
       latitude = data.lat;
     };
+
+    console.log(latitude, longitude);
     api().then(() => {
       api1();
     });
@@ -54,7 +58,7 @@ const AirQuality = () => {
         `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=0223c39a61c5120938eb1733b306d0b1`
       );
       const dat = await response.json();
-      console.log(dat);
+      console.log("dat", dat);
       const aqiData = dat.list[0].components;
       if (
         (aqiData.so2 >= 0 && aqiData.so2 < 20) ||
@@ -100,16 +104,13 @@ const AirQuality = () => {
     const currentDate = new Date();
     const currentDateTime = currentDate.toLocaleString();
 
-    // Retrieve existing pollution history data from session storage
     const existingHistory = localStorage.getItem("pollution_history");
     let pollutionHistory = [];
 
     if (existingHistory) {
-      // Parse existing history data if it exists
       pollutionHistory = JSON.parse(existingHistory);
     }
 
-    // Add new pollution data to the array
     const newPollutionData = {
       aqi: aqi,
       dateTime: currentDateTime,
@@ -119,7 +120,6 @@ const AirQuality = () => {
       position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 2000,
     });
-    // Save updated pollution history back to session storage
     localStorage.setItem("pollution_history", JSON.stringify(pollutionHistory));
   };
 
@@ -143,8 +143,8 @@ const AirQuality = () => {
                 : status === "Moderate"
                 ? "#EE7214"
                 : status === "poor"
-                ? "#e10b41"
-                : "#9f0a0a81",
+                ? "red"
+                : "grey",
           }}
         >
           {status}

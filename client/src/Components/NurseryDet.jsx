@@ -23,7 +23,9 @@ export default function NurseryDet() {
     city: "",
     location: "",
     price: "",
-    delivery:""
+    delivery:"",
+    pincodeNursery:"",
+    profNursery:""
   });
 
   const toastOptions = {
@@ -35,8 +37,13 @@ export default function NurseryDet() {
   };
 
   useEffect(() => {
+    // console.log(localStorage.getItem("nursery-app"));
     if (localStorage.getItem("nursery-app")) {
-      navigate("/login");
+    
+      navigate("/nursery");
+    }
+    else{
+      navigate("/login")
     }
   }, []);
 
@@ -75,7 +82,9 @@ export default function NurseryDet() {
         city,
         location,
         price,
-        delivery
+        delivery,
+        pincodeNursery,
+        profNursery
       } = values;
 
       const selectedCheckboxes = Array.from(
@@ -96,7 +105,9 @@ export default function NurseryDet() {
           selectedCheckboxes,
           location,
           price,
-          delivery
+          delivery,
+          pincodeNursery,
+          profNursery
         },
         {
           withCredentials: true,
@@ -121,14 +132,14 @@ export default function NurseryDet() {
           <img src="../Images/nurseryimg.png" alt="Form image" />
         </div>
         <form action="" onSubmit={(e) => handleSubmit(e)}>
-          <div className="form">
+          
             <div className="nursery-icon">
               <i className="fa-brands fa-4x fa-pagelines"></i>
             </div>
 
             <div className="head">NURSERY DETAILS</div>
-            <div className="form-body">
-              <section className="nursery-basic">
+            <div className="form-body nursery-basic">
+              
                 <div className="inp-field">
                   <label htmlFor="Nname">Nursery Name</label>
                   <input
@@ -136,6 +147,7 @@ export default function NurseryDet() {
                     name="nurseryname"
                     placeholder="Enter Nursery Name"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div className="inp-field">
@@ -145,6 +157,7 @@ export default function NurseryDet() {
                     name="ownername"
                     placeholder="Enter Owner Name"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
 
@@ -155,6 +168,7 @@ export default function NurseryDet() {
                     name="phone"
                     placeholder="Enter Phone Number"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div className="inp-field">
@@ -164,6 +178,7 @@ export default function NurseryDet() {
                     name="email"
                     placeholder="Enter Email"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div className="inp-field">
@@ -173,6 +188,7 @@ export default function NurseryDet() {
                     name="password"
                     placeholder="Enter Password"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div className="inp-field">
@@ -182,6 +198,7 @@ export default function NurseryDet() {
                     name="confirmPassword"
                     placeholder="Confirm Password"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
 
@@ -192,6 +209,7 @@ export default function NurseryDet() {
                     name="address"
                     placeholder="Enter address"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div className="inp-field">
@@ -201,6 +219,7 @@ export default function NurseryDet() {
                     name="state"
                     placeholder="Enter State"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div className="inp-field">
@@ -210,6 +229,17 @@ export default function NurseryDet() {
                     name="city"
                     placeholder="Enter City"
                     onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+                <div className="inp-field">
+                  <label htmlFor="pincodeNursery">Pin code</label>
+                  <input
+                    type="text"
+                    name="pincodeNursery"
+                    placeholder="Enter Pin code"
+                    onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div className="inp-field">
@@ -240,6 +270,7 @@ export default function NurseryDet() {
                     type="file"
                     accept="image/*"
                     id="photo"
+                    name="profNursery"
                   />
                 </div>
 
@@ -251,12 +282,13 @@ export default function NurseryDet() {
                     name="location"
                     placeholder="https://maps.app.goo.gl/ABC"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
 
                 <div className="inp-field">
                   <label htmlFor="Delivery">Do you deliver</label>
-                  <select name="delivery" onChange={(e) => handleChange(e)}>
+                  <select name="delivery" onChange={(e) => handleChange(e)} required>
                     <option>Choose an option</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -270,13 +302,13 @@ export default function NurseryDet() {
                     name="price"
                     placeholder="eg Rs 300 - 400"
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
-              </section>
+             
 
               <button className="reg">ENLIST NURSERY</button>
             </div>
-          </div>
         </form>
       </div>
       <ToastContainer />

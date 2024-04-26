@@ -8,10 +8,8 @@ const PollutionHistory = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Retrieve pollution history from session storage
     const storedHistory = localStorage.getItem("pollution_history");
     if (storedHistory) {
-      // Parse the JSON string to get the pollution history data
       const parsedHistory = JSON.parse(storedHistory);
       setPollutionHistory(parsedHistory);
     }

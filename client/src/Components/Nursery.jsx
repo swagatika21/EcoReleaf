@@ -71,8 +71,7 @@ export default function Nursery() {
                       <div className="n-detail">
                         <i className="fa-solid fa-location-dot n-icon fa-2xl"></i>
                         <span className="text-light">
-                          {" "}
-                          <a href={d.location}>View Location</a>{" "}
+                          <a href={d.location}>View Location</a>
                         </span>
                       </div>
                       <div className="n-detail">

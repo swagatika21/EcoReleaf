@@ -16,6 +16,8 @@ module.exports.nsignup = async (req, res, next) => {
       location,
       delivery,
       priceRange,
+      pincodeNursery,
+      profNursery
     } = req.body;
     const emailCheck = await User.findOne({ email });
     if (emailCheck)
@@ -34,6 +36,8 @@ module.exports.nsignup = async (req, res, next) => {
       location,
       delivery,
       priceRange,
+      pincodeNursery,
+      profNursery
     });
     delete user.password;
     return res.json({ status: true, user });

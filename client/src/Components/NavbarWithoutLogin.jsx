@@ -20,26 +20,23 @@ function NavbarWithoutLogin() {
           <li>
             <Link to="/" className="nav-elements">
               <i className="fa-solid fa-house "></i>
-              {/* <span>Home</span> */}
-            </Link>
-          </li>
-        </div>
-        <div>
-          <li>
-            <Link to="/signup" className="nav-elements">
-              <i className="fa-solid fa-user-plus"></i>
-              {/* <span>Sign Up</span> */}
             </Link>
           </li>
         </div>
         <div>
           <li>
             <Link to="/login" className="nav-elements">
-              <i className="fa-solid fa-right-to-bracket"></i>
-              {/* <span>Login</span> */}
+              <i className="fa-solid fa-user-plus"></i>
             </Link>
           </li>
         </div>
+        {/* <div>
+          <li>
+            <Link to="/login" className="nav-elements">
+              <i className="fa-solid fa-right-to-bracket"></i>
+            </Link>
+          </li>
+        </div> */}
       </ul>
       <div
         className={`mobile-menu-button ${mobileMenuOpen ? "open" : ""}`}

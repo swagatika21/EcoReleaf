@@ -1,25 +1,24 @@
-// import Navbar from "./Navbar";
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import "../Styles/NurseryDetails.css";
 import NavbarWithLogin from "./NavbarWithLogin";
 import { useParams } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const NurseryDetails = () => {
-  (function (w, d) {
-    w.CollectId = "6563577c20465d1aa0f1b44b";
-    var h = d.head || d.getElementsByTagName("head")[0];
-    var s = d.createElement("script");
-    s.setAttribute("type", "text/javascript");
-    s.async = true;
-    s.setAttribute("src", "https://collectcdn.com/launcher.js");
-    h.appendChild(s);
-  })(window, document);
-
+  
   const { nurseryId } = useParams();
   const [rating, setRating] = useState("");
   const [hasSubmittedRating, setHasSubmittedRating] = useState(false);
   const [nurseryDetails, setNurseryDetails] = useState(null);
-  console.log(nurseryId);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedRating = localStorage.getItem("rating");
+    if (savedRating) {
+      setRating(parseInt(savedRating));
+    }
+  }, []);
 
   useEffect(() => {
     const fetchNurseryDetails = async () => {
@@ -28,17 +27,20 @@ const NurseryDetails = () => {
           `http://localhost:5001/api/authn/nursery/${nurseryId}`
         );
         const data = await res.json();
-        console.log(data.nurseryname);
+        console.log(data);
         setNurseryDetails(data);
       } catch (error) {
         console.error("Error fetching nursery details:", error);
-        // Display an error message to the user here (optional)
       }
     };
   
     fetchNurseryDetails();
   }, [nurseryId]);
+
+ 
+
   const handleRatingSubmit = () => {
+      localStorage.setItem("rating", rating);
     setHasSubmittedRating(true);
   };
 
@@ -60,6 +62,12 @@ const NurseryDetails = () => {
     setRating(rating);
   };
 
+  const Viewnursery = () => {
+    navigate("/nursery"); 
+  };
+
+
+
   return (
     <>
       <NavbarWithLogin />
@@ -69,45 +77,48 @@ const NurseryDetails = () => {
         </div>
 
         <div className="nursery-det">
-          <h2>{nurseryDetails.nurseryname}</h2>
+        <h2>{nurseryDetails && nurseryDetails.nurseryname}</h2>
           <div className="n-details">
             <div className="ny-detail">
-              <i className="fa-solid fa-address-card n-icon fa-2xl"></i>
-              {/* <span>Address:</span> {nurseryDetails.address} */}
+              <i className="fa-solid fa-address-card n-icon fa-xl"></i>
+              <span>Address:</span> {nurseryDetails && nurseryDetails.address}
             </div>
 
             <div className="ny-detail">
-              <i className="fa-solid fa-square-phone n-icon fa-2xl"></i>
-              {/* <span>Phone:</span> {nurseryDetails.phone} */}
+              <i className="fa-solid fa-square-phone n-icon fa-xl"></i>
+              <span>Phone:</span> {nurseryDetails && nurseryDetails.phone}
             </div>
 
             <div className="ny-detail">
-              <i className="fa-solid fa-indian-rupee-sign n-icon fa-2xl"></i>
-              <span>Price Range:</span> $300 - $500
+              <i className="fa-solid fa-indian-rupee-sign n-icon fa-xl"></i>
+              <span>Price Range:</span> {nurseryDetails && nurseryDetails.phone}
             </div>
 
             <div className="ny-detail">
-              <i className="fa-solid fa-leaf n-icon fa-2xl"></i>
-              <span>Plant Speciality:</span> Herbal
+              <i className="fa-solid fa-leaf n-icon fa-xl"></i>
+              <span>Plant Speciality:</span> {nurseryDetails &&  nurseryDetails.selectedCheckboxes.join(', ')}
             </div>
 
             <div className="ny-detail">
-              <i className="fa-solid fa-star-half-stroke n-icon fa-2xl"></i>
+              <i className="fa-solid fa-star-half-stroke n-icon fa-xl"></i>
               <span>Rating:</span> {rating}
             </div>
 
             <div className="ny-detail">
-              <i className="fa-solid fa-truck-fast n-icon fa-2xl"></i>
-              <span>Home Delivery:</span> Yes
+              <i className="fa-solid fa-truck-fast n-icon fa-xl"></i>
+              <span>Home Delivery:</span> {nurseryDetails && nurseryDetails.delivery}
             </div>
 
             <div className="ny-detail">
-              <i className="fa-solid fa-location-dot n-icon fa-2xl"></i>
+              <i className="fa-solid fa-location-dot n-icon fa-xl"></i>
               <span>View Location:</span>
-              <a href="https://maps.app.goo.gl/T9k5Xnio4dPidgVg6">
-                https://maps.app.goo.gl/T9k5Xnio4dPidgVg6
+              <a href={nurseryDetails && nurseryDetails.location}>
+                VIEW
               </a>
             </div>
+          </div>
+          <div className="btn btn-outline-success" onClick={Viewnursery}>
+            View More Nursery
           </div>
         </div>
 
@@ -121,11 +132,6 @@ const NurseryDetails = () => {
         </div>
       </div>
 
-      <div className="chat-cont">
-        <button>
-          <i className="fa-solid fa-comments fa-xl"></i> GET TO KNOW US
-        </button>
-      </div>
     </>
   );
 };
