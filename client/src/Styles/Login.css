@@ -11,6 +11,22 @@
   text-align: center;
   background-color: #fff;
   /* background-image: url('../Images/leafbg.png'); */
+
+  button {
+    margin-top: 30px;
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #285430;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #a4be7b;
+  }
 }
 
 .login-form {
@@ -39,21 +55,7 @@ input:focus {
   border-color: #285430;
 }
 
-button {
-  margin-top: 30px;
-  padding: 12px 24px;
-  font-size: 18px;
-  background-color: #285430;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
 
-button:hover {
-  background-color: #a4be7b;
-}
 
 .login-alt {
   color: #011e31;
