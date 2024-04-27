@@ -1,4 +1,4 @@
-[
+export const dataHI=[
     {
       "name": "जरबेरा डेज़ी",
       "Rating": 5,
