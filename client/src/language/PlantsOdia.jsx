@@ -1,4 +1,4 @@
-[
+export const dataOD=[
     {
       "name": "ଗେରବେରା ଡେଜ଼ି",
       "Rating": 5,
