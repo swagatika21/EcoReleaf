@@ -91,7 +91,7 @@ const NurseryDetails = () => {
 
             <div className="ny-detail">
               <i className="fa-solid fa-indian-rupee-sign n-icon fa-xl"></i>
-              <span>Price Range:</span> {nurseryDetails && nurseryDetails.phone}
+              <span>Price Range:</span> {nurseryDetails && nurseryDetails.priceRange}
             </div>
 
             <div className="ny-detail">
@@ -125,7 +125,7 @@ const NurseryDetails = () => {
         <div className="rating-cont">
           <h4>Rate Your Experience</h4>
           <div className="rating">{stars}</div>
-          <button onClick={handleRatingSubmit}>Submit Rating</button>
+          <button onClick={handleRatingSubmit} className="btn btn-light mx-auto d-block mt-3 ">Submit Rating</button>
           {hasSubmittedRating && (
             <div className="thank-you-message">Thank you for your review! </div>
           )}

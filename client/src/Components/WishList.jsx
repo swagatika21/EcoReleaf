@@ -2,6 +2,7 @@ import NavbarWithLogin from "./NavbarWithLogin";
 import { useEffect, useState } from "react";
 import "../Styles/Wishlist.css";
 import { useNavigate } from "react-router-dom";
+import { FaLeaf } from "react-icons/fa";
 
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -27,6 +28,18 @@ const WishList = () => {
 
   const visitWishlist = () => {
     navigate("/plantrecom");
+  };
+
+  const renderRating = (rating) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars.push(<FaLeaf key={i} color="#65B741" />);
+      } else {
+        stars.push(<FaLeaf key={i} color="#e4e5e9" />);
+      }
+    }
+    return stars;
   };
 
   // Check if wishlist is empty before rendering items
@@ -60,22 +73,26 @@ const WishList = () => {
                   <img src={plant.image} alt="plant" className="plant-img" />
                 </div>
                 <div>
-                <p className="plant-name mt-4 mb-3">
-                  <strong className="mt-2">{plant.name}</strong>
-                </p>
-                <p>
-                  <i
-                    className="fa-solid fa-sun p-2
-                  "
-                  ></i>
-                  {plant.Sunlight}
-                </p>
-                <p>
-                  <i className="fa-solid fa-droplet p-2"></i>
-                  {plant.water}
-                </p>
+                  <p className="plant-name mt-2 mb-2">
+                    <strong className="mt-2">{plant.name}</strong>
+                    <p className="rating">{renderRating(plant.Rating)}</p>
+                  </p>
+                  <p>
+                    <i
+                      className="fa-solid fa-sun p-2"
+                    ></i>
+                    {plant.Sunlight}
+                  </p>
+                  <p>
+                    <i className="fa-solid fa-droplet p-2"></i>
+                    {plant.water}
+                  </p>
+                  <p>
+                    <i className="fa-solid fa-ruler-vertical p-2"></i>
+                    {plant.size}
+                  </p>
                 </div>
-             
+
                 <button
                   className="btn btn-outline-danger"
                   onClick={() => handleDelete(plant.Id)}
@@ -86,11 +103,13 @@ const WishList = () => {
             </div>
           </div>
         ))}
-         
       </div>
-      <button className="btn btn-outline-success mx-auto d-block " onClick={visitWishlist}>
-            View Recommendation
-          </button>
+      <button
+        className="btn btn-outline-success mx-auto d-block "
+        onClick={visitWishlist}
+      >
+        View Recommendation
+      </button>
     </div>
   );
 };

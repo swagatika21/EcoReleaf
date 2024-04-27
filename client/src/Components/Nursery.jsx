@@ -117,70 +117,79 @@ const Nursery = () => {
 
   return (
     <>
-      <NavbarWithLogin />
-      <div className="container-fluid">
-        {/* search bar */}
-        <div>
-          <form action="" className="search-bar">
-            <input
-              type="search"
-              name="search"
-              pattern=".*\S.*"
-              placeholder="Search..."
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <button className="search-btn" type="submit">
-              <i className="fa-solid fa-search"></i>
-            </button>
-          </form>
-        </div>
-        <div className="row">
-          {distances.map(({nursery, distance}) => (
-              <div className="col-md-4 text-center card nursery-desc" key={nursery._id}>
-                <div className="d-flex">
-                  <div className="n-img-container">
-                    <img
-                    className="  rounded"
-                      src="../Images/dam.png"
-                      alt="plant"
-                    />
-                  </div>
-                  <div className="n-info">
-                    <h2>{nursery.nurseryname}</h2>
-                    <div className="n-details">
-                      <div className="n-detail">
-                        <span>Address:</span> {nursery.address}
-                      </div>
-                      <div className="n-detail">
-                      <p>Distance: {distance.toFixed(2)} km</p>
-                      </div>
-
-
-                      <div className="n-detail d-flex">
-                        <button className="btn btn-success text-light  mx-auto"
-                          onClick={() =>
-                            navigate(`/nurseryDetails/${nursery._id}`)
-                          }
-                        >
-                           Details
-                        </button>
-                        <span className="text-light">
-                          <button className="btn btn-success">
-                          <a href={nursery.location}> Location</a>{" "}
-                          </button>
-                        </span>
-                      </div>
-
+    <NavbarWithLogin />
+    <div className="container-fluid">
+      {/* Search bar */}
+      <div className="search-bar-container">
+        <form action="" className="search-bar">
+          <input
+            type="search"
+            name="search"
+            pattern=".*\S.*"
+            placeholder="Search..."
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button className="search-btn" type="submit">
+            <i className="fa-solid fa-search"></i>
+          </button>
+        </form>
+      </div>
+      {/* Nursery cards */}
+      <div className="row">
+        {distances.map(({ nursery, distance }, index) => (
+          <div className="col-md-4" key={nursery._id}>
+            <div className="card nursery-card">
+              <div className="card-body">
+                 {/* Mark nursery with minimum distance as "Near" */}
+                 {index === 0 ? (
+                        <span className="badge bg-success">Near</span>
+                      ) : (
+                        <span className="badge bg-danger">Far</span>
+                      )}
+                <div className="n-img-container mx-auto">
+                  <img
+                    className="rounded"
+                    src="../Images/dam.png"
+                    alt="plant"
+                  />
+                </div>
+                <div className="n-info text-center">
+                  <h2 className="nursery-name">{nursery.nurseryname}</h2>
+                  <div className="n-details">
+                    <div className="n-detail">
+                      <span>Address:</span> {nursery.address}
+                    </div>
+                    <div className="n-detail">
+                      <span>Distance:</span> {distance.toFixed(2)} km
+                    </div>
+                    {/* Add badges for near and far */}
+                    <div className="n-detail d-flex justify-content-evenly mt-3">
+                      <button
+                        className="btn btn-success text-light"
+                        onClick={() =>
+                          navigate(`/nurseryDetails/${nursery._id}`)
+                        }
+                      >
+                        Details
+                      </button>
+                      <button className="btn btn-success">
+                        <a href={nursery.location} className="text-light">
+                          Location
+                        </a>
+                      </button>
+                     
                     </div>
                   </div>
-                  
                 </div>
-                
               </div>
-            ))}
-        </div>
+            </div>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
+  </>
+  
+  
   );
 };
 
