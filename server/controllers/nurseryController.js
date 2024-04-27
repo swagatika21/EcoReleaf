@@ -16,9 +16,12 @@ module.exports.nsignup = async (req, res, next) => {
       location,
       delivery,
       priceRange,
-      pincodeNursery,
+      pincode,
       profNursery
     } = req.body;
+
+    console.log(req.body)
+
     const emailCheck = await User.findOne({ email });
     if (emailCheck)
       return res.json({ msg: "Email already used", status: false });
@@ -36,7 +39,7 @@ module.exports.nsignup = async (req, res, next) => {
       location,
       delivery,
       priceRange,
-      pincodeNursery,
+      pincode,
       profNursery
     });
     delete user.password;

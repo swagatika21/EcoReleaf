@@ -103,9 +103,9 @@ export default function NurseryDet() {
           city,
           selectedCheckboxes,
           location,
-          price,
+          priceRange:price,
           delivery,
-          pincodeNursery,
+          pincode:pincodeNursery,
           profNursery,
         },
         {
