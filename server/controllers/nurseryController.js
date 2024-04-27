@@ -5,6 +5,7 @@ module.exports.nsignup = async (req, res, next) => {
   try {
     const {
       nurseryname,
+      role,
       ownername,
       email,
       password,
@@ -16,7 +17,7 @@ module.exports.nsignup = async (req, res, next) => {
       location,
       delivery,
       priceRange,
-      pincode,
+      pincodeNursery,
       profNursery
     } = req.body;
 
@@ -32,6 +33,7 @@ module.exports.nsignup = async (req, res, next) => {
       }    const user = await User.create({
       email,
       nurseryname,
+      role,
       ownername,
       password: hashedPassword,
       phone,
@@ -42,7 +44,7 @@ module.exports.nsignup = async (req, res, next) => {
       location,
       delivery,
       priceRange,
-      pincode,
+      pincodeNursery,
       profNursery
     });
     delete user.password;

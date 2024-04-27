@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import "../Styles/Login.css";
 import { useContext, useEffect, useState } from "react";
@@ -26,7 +27,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("chat-app-user")) {
+    if (localStorage.getItem("nursery-app")) {
       navigate("/");
     }
   }, []);
@@ -56,6 +57,7 @@ const Login = () => {
         {
           email,
           password,
+        
         },
         {
           withCredentials: true,
@@ -63,15 +65,20 @@ const Login = () => {
       );
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
-      }
-      if (data.status === true) {
-        localStorage.setItem("user-app", JSON.stringify(data.user));
-        const loginData=JSON.parse(localStorage.getItem("user-app"))
-        contextData.setLogin("true")
+      } else {
+        console.log(data.user.role);
+
+        if (data.user.role === "nursery") {
+          localStorage.setItem("nursery-app", JSON.stringify(data.user));
+        } else {
+          localStorage.setItem("user-app", JSON.stringify(data.user));
+        }
+        contextData.setLogin("true");
         navigate("/airquality");
       }
     }
   };
+  
 
   return (
     <>

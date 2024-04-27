@@ -57,6 +57,7 @@ const Nursery = () => {
     const fetchUserLocation = async () => {
       try {
         const p = JSON.parse(localStorage.getItem("user-app"));
+        console.log(p,"p");
         const urlLocation = `https://api.openweathermap.org/geo/1.0/zip?zip=${
           p ? p.pincode : 755050
         },IN&appid=0223c39a61c5120938eb1733b306d0b1`;
@@ -88,12 +89,14 @@ const Nursery = () => {
           nurseryLocation.lat,
           nurseryLocation.lon
         );
-        return {nursery, distance};
+        return { nursery, distance };
       })).then(distances => {
-        setDistances(distances); // Add this line
+        distances.sort((a, b) => a.distance - b.distance);
+        setDistances(distances);
       });
     }
-  }, [data, userLat, userLon]);
+  }, [data.length, userLat, userLon]);
+  
   
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -137,8 +140,8 @@ const Nursery = () => {
       {/* Nursery cards */}
       <div className="row">
         {distances.map(({ nursery, distance }, index) => (
-          <div className="col-md-4" key={nursery._id}>
-            <div className="card nursery-card">
+          <div className="col-md-4 "  key={nursery._id}>
+            <div className="card h-100 nursery-card">
               <div className="card-body">
                  {/* Mark nursery with minimum distance as "Near" */}
                  {index === 0 ? (

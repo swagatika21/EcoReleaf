@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // /* eslint-disable no-unused-vars */
 // import { useNavigate } from "react-router-dom";
 // import { ToastContainer, toast } from "react-toastify";
@@ -341,6 +342,7 @@ export default function NurseryDet() {
   const contextData = useContext(Context);
   const [values, setValues] = useState({
     nurseryname: "",
+    role:"nursery",
     ownername: "",
     email: "",
     password: "",
@@ -400,6 +402,7 @@ export default function NurseryDet() {
     if (handleValidation()) {
       const {
         nurseryname,
+        role,
         ownername,
         email,
         password,
@@ -422,6 +425,7 @@ export default function NurseryDet() {
         nRegisterRoute,
         {
           nurseryname,
+          role,
           ownername,
           email,
           password,
@@ -433,7 +437,7 @@ export default function NurseryDet() {
           location,
           priceRange:price,
           delivery,
-          pincode:pincodeNursery,
+          pincodeNursery:pincodeNursery,
           profNursery,
         },
         {
@@ -464,6 +468,17 @@ export default function NurseryDet() {
 
           <div className="head">NURSERY DETAILS</div>
           <div className="form-body nursery-basic">
+          <div className="inp-field">
+              <label htmlFor="role">Nursery Role</label>
+              <input
+                type="text"
+                name="role"
+                value="nursery"
+                disabled
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
             <div className="inp-field">
               <label htmlFor="Nname">Nursery Name</label>
               <input

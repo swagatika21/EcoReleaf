@@ -23,6 +23,7 @@ export default function UserDet() {
     city: "",
     location: "",
     pincode: "",
+    role:"user"
   });
 
   const toastOptions = {
@@ -77,6 +78,7 @@ export default function UserDet() {
         city,
         location,
         pincode,
+        role
       } = values;
 
       const selectedCheckboxes = Array.from(
@@ -95,6 +97,7 @@ export default function UserDet() {
           city,
           location,
           pincode,
+          role,
           selectedCheckboxes
         },
         {
@@ -128,6 +131,17 @@ export default function UserDet() {
             <div className="head-user">USER DETAILS</div>
             <div className="form-body">
               <section className="basic">
+              <div className="inp-field">
+              <label htmlFor="role">User Role</label>
+              <input
+                type="text"
+                name="role"
+                value="user"
+                disabled
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </div>
                 <div className="inp-field">
                   <label htmlFor="fname">Full Name</label>
                   <input
