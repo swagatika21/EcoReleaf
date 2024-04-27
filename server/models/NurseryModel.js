@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  pincode: {
+  pincodeNursery: {
     type: String,
     required: true,
   },
@@ -50,7 +50,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   delivery: {
     type: String,
     enum: ["Yes", "No"],

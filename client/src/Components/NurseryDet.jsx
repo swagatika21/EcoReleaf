@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,10 +23,10 @@ export default function NurseryDet() {
     state: "",
     city: "",
     location: "",
-    price: "",
+    priceRange: "",
     delivery: "",
     pincodeNursery: "",
-    profNursery: "",
+    profNursery: null,
   });
 
   const toastOptions = {
@@ -47,8 +48,13 @@ export default function NurseryDet() {
   }, []);
 
   const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    if (event.target.name === "profNursery") {
+      setValues({ ...values, profNursery: event.target.files[0] });
+    } else {
+      setValues({ ...values, [event.target.name]: event.target.value });
+    }
   };
+  
 
   const handleValidation = () => {
     console.log("validate");
@@ -80,7 +86,7 @@ export default function NurseryDet() {
         state,
         city,
         location,
-        price,
+        priceRange,
         delivery,
         pincodeNursery,
         profNursery,
@@ -103,13 +109,16 @@ export default function NurseryDet() {
           city,
           selectedCheckboxes,
           location,
-          price,
+          priceRange,
           delivery,
           pincodeNursery,
           profNursery,
         },
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       if (data.status === false) {
@@ -129,7 +138,7 @@ export default function NurseryDet() {
         <div className="image">
           <img src="../Images/nurseryimg.png" alt="Form image" />
         </div>
-        <form action="" onSubmit={(e) => handleSubmit(e)}>
+        <form action="" onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
           <div className="nursery-icon">
             <i className="fa-brands fa-4x fa-pagelines"></i>
           </div>
@@ -299,7 +308,7 @@ export default function NurseryDet() {
               <input
                 type="tel"
                 id="price-range"
-                name="price"
+                name="priceRange"
                 placeholder="eg Rs 300 - 400"
                 onChange={(e) => handleChange(e)}
                 required
