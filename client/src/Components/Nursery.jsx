@@ -1,11 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-
+import "../Styles/Nursery.css";
+import NavbarWithLogin from "./NavbarWithLogin";
+import { useNavigate } from "react-router-dom";
 const Nursery = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [userLat, setUserLat] = useState(null);
   const [userLon, setUserLon] = useState(null);
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+  const [distances, setDistances] = useState([]); // Add this line
+
   const fetchLocationFromPincode = async (pincode) => {
     try {
       const urlLocation = `https://api.openweathermap.org/geo/1.0/zip?zip=${pincode},IN&appid=0223c39a61c5120938eb1733b306d0b1`;
@@ -20,6 +26,15 @@ const Nursery = () => {
       return null;
     }
   };
+
+  const filteredData = data
+    ? data.filter((d) => {
+        return (
+          d.nurseryname.toLowerCase().includes(search.toLowerCase()) ||
+          d.address.toLowerCase().includes(search.toLowerCase())
+        );
+      })
+    : [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,28 +80,21 @@ const Nursery = () => {
 
   useEffect(() => {
     if (userLat !== null && userLon !== null && data.length > 0) {
-      let nearestNursery = null;
-      let minDistance = Infinity;
-
-      data.forEach(async(nursery) => {
+      Promise.all(data.map(async (nursery) => {
         const nurseryLocation = await fetchLocationFromPincode(nursery.pincodeNursery);
-        console.log(nurseryLocation);
         const distance = calculateDistance(
           userLat,
           userLon,
           nurseryLocation.lat,
           nurseryLocation.lon
         );
-        if (distance < minDistance) {
-          minDistance = distance;
-          nearestNursery = nursery;
-        }
+        return {nursery, distance};
+      })).then(distances => {
+        setDistances(distances); // Add this line
       });
-
-      console.log("Nearest nursery:", nearestNursery);
-      console.log("Distance:", minDistance.toFixed(2), "km");
     }
   }, [data, userLat, userLon]);
+  
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // Earth radius in kilometers
@@ -108,15 +116,71 @@ const Nursery = () => {
   }
 
   return (
-    <div>
-      {data.map((nursery) => (
-        <div key={nursery._id}>
-          <h2>{nursery.nurseryname}</h2>
-          <p>Address: {nursery.address}</p>
-          {/* Render other nursery details */}
+    <>
+      <NavbarWithLogin />
+      <div className="container-fluid">
+        {/* search bar */}
+        <div>
+          <form action="" className="search-bar">
+            <input
+              type="search"
+              name="search"
+              pattern=".*\S.*"
+              placeholder="Search..."
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button className="search-btn" type="submit">
+              <i className="fa-solid fa-search"></i>
+            </button>
+          </form>
         </div>
-      ))}
-    </div>
+        <div className="row">
+          {distances.map(({nursery, distance}) => (
+              <div className="col-md-4 text-center card nursery-desc" key={nursery._id}>
+                <div className="d-flex">
+                  <div className="n-img-container">
+                    <img
+                    className="  rounded"
+                      src="../Images/dam.png"
+                      alt="plant"
+                    />
+                  </div>
+                  <div className="n-info">
+                    <h2>{nursery.nurseryname}</h2>
+                    <div className="n-details">
+                      <div className="n-detail">
+                        <span>Address:</span> {nursery.address}
+                      </div>
+                      <div className="n-detail">
+                      <p>Distance: {distance.toFixed(2)} km</p>
+                      </div>
+
+
+                      <div className="n-detail d-flex">
+                        <button className="btn btn-success text-light  mx-auto"
+                          onClick={() =>
+                            navigate(`/nurseryDetails/${nursery._id}`)
+                          }
+                        >
+                           Details
+                        </button>
+                        <span className="text-light">
+                          <button className="btn btn-success">
+                          <a href={nursery.location}> Location</a>{" "}
+                          </button>
+                        </span>
+                      </div>
+
+                    </div>
+                  </div>
+                  
+                </div>
+                
+              </div>
+            ))}
+        </div>
+      </div>
+    </>
   );
 };
 
