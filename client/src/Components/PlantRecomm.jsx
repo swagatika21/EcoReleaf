@@ -8,6 +8,12 @@ import "../Styles/PlantRecomm.css";
 import { FaLeaf } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
+import { dataEN } from "../language/Plants";
+import { dataHI } from "../language/PlantsHindi";
+import { dataOD } from "../language/PlantsOdia";
+
+// console.log(dataHI)
+
 const PlantRecommendation = () => {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
@@ -15,6 +21,7 @@ const PlantRecommendation = () => {
 
   const [jsonData, setJsonData] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [language, setLanguage] = useState("EN");
   const navigate = useNavigate();
   const { i18n } = useTranslation();
   const { t } = useTranslation();
@@ -22,9 +29,10 @@ const PlantRecommendation = () => {
   const changeLanguage = (e) => {
     const lang = e.target.value;
     console.log("Selected Language:", lang);
-    i18n.changeLanguage(lang);
+    setLanguage(lang);
+    // i18n.changeLanguage(lang);
   };
- 
+
   useEffect(() => {
     const fetchUserPreferences = async () => {
       if (!localStorage.getItem("user-app")) {
@@ -39,16 +47,16 @@ const PlantRecommendation = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("./Plants.json");
-        const data = await response.json();
-        setJsonData(data);
+        // const response = await fetch("./Plants.json");
+        // const data = await response.json();
+        language=="EN"?setJsonData(dataEN):language=="HI"?setJsonData(dataHI):setJsonData(dataOD)
       } catch (error) {
         console.error("Error fetching or parsing data: ", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [language]);
 
   const addToWishlist = (plant) => {
     setWishlist([...wishlist, plant]);
@@ -83,13 +91,14 @@ const PlantRecommendation = () => {
       <div className="container-fluid h-100 centered-content">
         <h3 className="heading">Plant Recommendation</h3>
         <div className="recomm-info">
-          <strong className="info">{name && `Plant recommendation for ${name}`}</strong>
+          <strong className="info">
+            {name && `Plant recommendation for ${name}`}
+          </strong>
           <div className="">
-          
             <select onChange={changeLanguage} className="form-select">
-              <option value="en">English</option>
-              <option value="hi">HIndi</option>
-              <option value="or">Odia</option>
+              <option value="EN">English</option>
+              <option value="HI">HIndi</option>
+              <option value="OD">Odia</option>
             </select>
           </div>
         </div>
