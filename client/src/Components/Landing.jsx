@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Landing.css";
@@ -14,6 +15,9 @@ function Landing() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const user=JSON.parse(localStorage.getItem("user-app"))
+  console.log(user);
+
   return (
     <>
       {JSON.parse(localStorage.getItem("user-app")) ? <NavbarWithLogin /> : <NavbarWithoutLogin />}
@@ -25,7 +29,10 @@ function Landing() {
             alt="Background"
           />
           <div className="text-overlay">
-            <h3 className="quote-top">
+          {localStorage.getItem("user-app") && (
+  <h2 className="quote-top">Welcome, {user.fullname} !</h2>
+)}
+            <h3 className="quote-top"> 
               “To plant a garden is to believe in tomorrow.”
             </h3>
 
@@ -62,7 +69,7 @@ function Landing() {
             Join our community by registering as a Nursery owner or contributor
             and become a part of the green revolution.
           </p>
-          <button onClick={scrollToTop}>JOIN NOW</button>
+          <button onClick={scrollToTop} className="btn btn-success">JOIN NOW</button>
         </div>
         <div className="feature">
           <div className="num">02</div>
@@ -71,7 +78,7 @@ function Landing() {
             you are a contributor. If you are a nursery owner, showcase your
             profile to reach potential customers and promote your nursery.
           </p>
-          <button onClick={scrollToTop}>JOIN NOW</button>
+          <button onClick={scrollToTop} className="btn btn-success">JOIN NOW</button>
         </div>
         <div className="feature">
           <div className="num">03</div>
@@ -80,7 +87,7 @@ function Landing() {
             preferences. Connect with nurseries to make a positive impact on the
             environment and contribute to a greener planet.
           </p>
-          <button onClick={scrollToTop}>JOIN NOW</button>
+          <button onClick={scrollToTop} className="btn btn-success">JOIN NOW</button>
         </div>
       </div>
 

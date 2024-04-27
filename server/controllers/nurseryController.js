@@ -1,6 +1,6 @@
 const User = require("../models/NurseryModel");
 const bcrypt = require("bcrypt");
-
+let hashedPassword;
 module.exports.nsignup = async (req, res, next) => {
   try {
     const {
@@ -25,8 +25,11 @@ module.exports.nsignup = async (req, res, next) => {
     const emailCheck = await User.findOne({ email });
     if (emailCheck)
       return res.json({ msg: "Email already used", status: false });
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({
+      try {
+       hashedPassword = await bcrypt.hash(password, 10);
+      } catch (error) {
+        console.error("Error hashing password:", error);
+      }    const user = await User.create({
       email,
       nurseryname,
       ownername,

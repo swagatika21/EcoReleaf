@@ -184,7 +184,8 @@ const AirQuality = () => {
           <Tooltip title="Recommendation" placement="top">
             <button
               className="btn-aqi"
-              onClick={() => navigate("/plantrecom", { state: { name } })}
+              onClick={() =>  navigate(`/plantrecom?name=${encodeURIComponent(name)}`)}
+
             >
               <i className="fa-solid fa-seedling"></i>{" "}
             </button>

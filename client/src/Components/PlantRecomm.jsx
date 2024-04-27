@@ -9,8 +9,10 @@ import { FaLeaf } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
 const PlantRecommendation = () => {
-  const { state } = useLocation();
-  const nameFromAirQuality = state && state.name;
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const name = params.get("name");
+
   const [jsonData, setJsonData] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const navigate = useNavigate();
@@ -81,7 +83,7 @@ const PlantRecommendation = () => {
       <div className="container-fluid h-100 centered-content">
         <h3 className="heading">Plant Recommendation</h3>
         <div className="recomm-info">
-          <div className="info">Area: {nameFromAirQuality}</div>
+          <strong className="info">{name && `Plant recommendation for ${name}`}</strong>
           <div className="">
           
             <select onChange={changeLanguage} className="form-select">

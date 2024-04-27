@@ -23,11 +23,8 @@
 }
 
 .plant-name strong{
-   background-color:#285430;
-   color: white;
-   width: auto;
-     padding: 10px;
-   border-radius: 10px;
+   color: #285430;
+   font-size:30px;
 }
 
 .plant-image {
