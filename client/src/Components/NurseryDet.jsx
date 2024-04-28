@@ -610,6 +610,7 @@ export default function NurseryDet() {
                 accept="image/*"
                 id="photo"
                 name="profNursery"
+                onChange={(e) => handleChange(e)}
               />
             </div>
 

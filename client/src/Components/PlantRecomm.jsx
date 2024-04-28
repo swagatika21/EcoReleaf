@@ -112,8 +112,7 @@ const PlantRecommendation = () => {
                   <div className="plant-image">
                     <img src={plant.image} alt="plant" />
                   </div>
-                  {/* <p>{plant.name}</p> */}
-                  <p>{t(plant.name)}</p>
+                  <p className="mt-2"> <strong>{t(plant.name)}</strong></p>
                   <p className="rating">{renderRating(plant.Rating)}</p>
                 </div>
                 <button

@@ -140,15 +140,14 @@ const Nursery = () => {
       {/* Nursery cards */}
       <div className="row">
         {distances.map(({ nursery, distance }, index) => (
-          <div className="col-md-4 "  key={nursery._id}>
+          <div className="col-md-4 mt-4 "  key={nursery._id}>
             <div className="card h-100 nursery-card">
               <div className="card-body">
                  {/* Mark nursery with minimum distance as "Near" */}
-                 {index === 0 ? (
-                        <span className="badge bg-success">Near</span>
-                      ) : (
-                        <span className="badge bg-danger">Far</span>
-                      )}
+                 { distance <= 20 && (
+    <span className="badge "><i className="fa-solid fa-map-pin me-2"></i>Near</span>
+)}
+
                 <div className="n-img-container mx-auto">
                   <img
                     className="rounded"

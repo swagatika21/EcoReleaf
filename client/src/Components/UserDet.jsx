@@ -223,7 +223,7 @@ export default function UserDet() {
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
-                <div className="inp-field">
+                {/* <div className="inp-field">
                   <label>Type of Location</label>
                   <div className="checkbox-group">
                     <label>
@@ -239,7 +239,7 @@ export default function UserDet() {
                       Farm
                     </label>
                   </div>
-                </div>
+                </div> */}
               </section>
 
               <button className="user-reg">REGISTER</button>

@@ -1,18 +1,46 @@
+/* eslint-disable no-unused-vars */
 import NavbarWithLogin from "./NavbarWithLogin";
 import { useEffect, useState } from "react";
 import "../Styles/Wishlist.css";
 import { useNavigate } from "react-router-dom";
 import { FaLeaf } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
+import { dataEN } from "../language/Plants";
+import { dataHI } from "../language/PlantsHindi";
+import { dataOD } from "../language/PlantsOdia";
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
-  const navigate = useNavigate();
+  const [jsonData, setJsonData] = useState([]);
 
+  const navigate = useNavigate();
+  const [language, setLanguage] = useState("EN");
+  const { i18n } = useTranslation();
+  const { t } = useTranslation();
+
+  const changeLanguage = (e) => {
+    const lang = e.target.value;
+    console.log("Selected Language:", lang);
+    setLanguage(lang);
+    // i18n.changeLanguage(lang);
+  };
   useEffect(() => {
     const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     setWishlistItems(storedWishlist);
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // const response = await fetch("./Plants.json");
+        // const data = await response.json();
+        language=="EN"?setJsonData(dataEN):language=="HI"?setJsonData(dataHI):setJsonData(dataOD)
+      } catch (error) {
+        console.error("Error fetching or parsing data: ", error);
+      }
+    };
 
+    fetchData();
+  }, [language]);
   // Function to handle deletion of wishlist items
   const handleDelete = (Id) => {
     console.log(Id);
@@ -52,6 +80,7 @@ const WishList = () => {
           {/* Display an image for empty wishlist */}
           <img src="../Images/heart.png" alt="Empty Wishlist" />
           <div className="d-block mx-auto">
+         
             <button className="btn btn-outline-success" onClick={visitWishlist}>
               View Recommendation
             </button>
@@ -67,6 +96,13 @@ const WishList = () => {
       <div className="row">
         {wishlistItems.map((plant) => (
           <div key={plant.id} className="col-md-6">
+             {/* <div className="">
+            <select onChange={changeLanguage} className="form-select">
+              <option value="EN">English</option>
+              <option value="HI">HIndi</option>
+              <option value="OD">Odia</option>
+            </select>
+          </div> */}
             <div className="wishlist-item w-50 m-2 mx-auto mt-3">
               <div className="wishlist-info  text-center">
                 <div className="plant-image">
@@ -74,22 +110,22 @@ const WishList = () => {
                 </div>
                 <div>
                   <p className="plant-name mt-2 mb-2">
-                    <strong className="mt-2">{plant.name}</strong>
-                    <p className="rating">{renderRating(plant.Rating)}</p>
+                    <strong className="mt-2">{t(plant.name)}</strong><br></br>
+                    <span className="rating">{renderRating(plant.Rating)}</span>
                   </p>
                   <p>
                     <i
                       className="fa-solid fa-sun p-2"
                     ></i>
-                    {plant.Sunlight}
+                    {t(plant.Sunlight)}
                   </p>
                   <p>
                     <i className="fa-solid fa-droplet p-2"></i>
-                    {plant.water}
+                    {t(plant.water)}
                   </p>
                   <p>
                     <i className="fa-solid fa-ruler-vertical p-2"></i>
-                    {plant.size}
+                    {t(plant.size)}
                   </p>
                 </div>
 

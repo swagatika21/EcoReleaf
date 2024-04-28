@@ -153,7 +153,7 @@ export const dataHI=[
       "image": "https://media.architecturaldigest.com/photos/5efe15a2275c7e920a27f8aa/3:4/w_1600%2Cc_limit/bloomscape_product-hedgehog-aloe-charcoal.jpg"
     },
     {
-      "name": "बेसिल",
+      "name": "तुलसी",
       "Rating": 5,
       "Sunlight": "पूर्ण सूरज",
       "water": "मध्यम (पानी)",
@@ -162,7 +162,7 @@ export const dataHI=[
       "image": "https://media.istockphoto.com/id/1253676637/photo/holy-basil.jpg?s=612x612&w=0&k=20&c=4kZxa85rXwQ1yBZIgxKy8q3gHRrH796dTsZrVCUOoIs="
     },
     {
-      "name": "मिंट",
+      "name": "पुदीना",
       "Rating": 3,
       "Sunlight": "पूर्ण सूरज से आंशिक छाया तक",
       "water": "उच्च (पानी)",
