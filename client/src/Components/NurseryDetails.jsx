@@ -2,11 +2,10 @@
 import { useEffect, useState } from "react";
 import "../Styles/NurseryDetails.css";
 import NavbarWithLogin from "./NavbarWithLogin";
-import { useParams } from "react-router-dom";
-import {  useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { getNurseryByIdRoute } from "../utils/APIRoutes";
 
 const NurseryDetails = () => {
-  
   const { nurseryId } = useParams();
   const [rating, setRating] = useState("");
   const [hasSubmittedRating, setHasSubmittedRating] = useState(false);
@@ -23,25 +22,24 @@ const NurseryDetails = () => {
   useEffect(() => {
     const fetchNurseryDetails = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:5001/api/authn/nursery/${nurseryId}`
-        );
+        const res = await fetch(getNurseryByIdRoute(nurseryId));
         const data = await res.json();
-        console.log(data);
         setNurseryDetails(data);
       } catch (error) {
         console.error("Error fetching nursery details:", error);
       }
     };
-  
+
     fetchNurseryDetails();
   }, [nurseryId]);
 
- 
-
   const handleRatingSubmit = () => {
-      localStorage.setItem("rating", rating);
+    localStorage.setItem("rating", rating);
     setHasSubmittedRating(true);
+  };
+
+  const handleStarClick = (selectedRating) => {
+    setRating(selectedRating);
   };
 
   const stars = [];
@@ -58,15 +56,9 @@ const NurseryDetails = () => {
     );
   }
 
-  const handleStarClick = (rating) => {
-    setRating(rating);
+  const viewNursery = () => {
+    navigate("/nursery");
   };
-
-  const Viewnursery = () => {
-    navigate("/nursery"); 
-  };
-
-
 
   return (
     <>
@@ -74,7 +66,9 @@ const NurseryDetails = () => {
       <div className="Nursery-det-container">
         <div className="nursery-img">
           <img src="../Images/dam.png" alt="plant" />
-          <h4 className="text-center">{nurseryDetails && nurseryDetails.nurseryname}</h4>
+          <h4 className="text-center">
+            {nurseryDetails && nurseryDetails.nurseryname}
+          </h4>
         </div>
 
         <div className="nursery-det">
@@ -96,7 +90,8 @@ const NurseryDetails = () => {
 
             <div className="ny-detail">
               <i className="fa-solid fa-leaf n-icon fa-xl"></i>
-              <span>Plant Speciality:</span> {nurseryDetails &&  nurseryDetails.selectedCheckboxes.join(', ')}
+              <span>Plant Speciality:</span>{" "}
+              {nurseryDetails && nurseryDetails.selectedCheckboxes.join(", ")}
             </div>
 
             <div className="ny-detail">
@@ -112,12 +107,13 @@ const NurseryDetails = () => {
             <div className="ny-detail">
               <i className="fa-solid fa-location-dot n-icon fa-xl"></i>
               <span>View Location:</span>
-              <a href={nurseryDetails && nurseryDetails.location}>
-                View
-              </a>
+              <a href={nurseryDetails && nurseryDetails.location}>View</a>
             </div>
           </div>
-          <div className="btn btn-outline-success mx-auto d-block w-50 mt-3" onClick={Viewnursery}>
+          <div
+            className="btn btn-outline-success mx-auto d-block w-50 mt-3"
+            onClick={viewNursery}
+          >
             View More Nursery
           </div>
         </div>
@@ -125,13 +121,17 @@ const NurseryDetails = () => {
         <div className="rating-cont">
           <h4>Rate Your Experience</h4>
           <div className="rating">{stars}</div>
-          <button onClick={handleRatingSubmit} className="btn btn-light mx-auto d-block mt-3 ">Submit Rating</button>
+          <button
+            onClick={handleRatingSubmit}
+            className="btn btn-light mx-auto d-block mt-3 "
+          >
+            Submit Rating
+          </button>
           {hasSubmittedRating && (
             <div className="thank-you-message">Thank you for your review! </div>
           )}
         </div>
       </div>
-
     </>
   );
 };
