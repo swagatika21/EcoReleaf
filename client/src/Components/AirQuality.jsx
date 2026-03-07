@@ -7,6 +7,7 @@ import { Tooltip } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavbarWithLogin from "./NavbarWithLogin";
+import { OPENWEATHER_API_KEY } from "../utils/config";
 
 const AirQuality = () => {
   const [name, setName] = useState();
@@ -36,7 +37,7 @@ const AirQuality = () => {
     console.log("pin", p.pincode);
     const urlLocation = `https://api.openweathermap.org/geo/1.0/zip?zip=${
       p ? p.pincode : 755050
-    },IN&appid=0223c39a61c5120938eb1733b306d0b1`;
+    },IN&appid=${OPENWEATHER_API_KEY}`;
 
     const api = async () => {
       const res = await fetch(urlLocation);
@@ -55,7 +56,7 @@ const AirQuality = () => {
   const api1 = async () => {
     if (latitude && longitude) {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=0223c39a61c5120938eb1733b306d0b1`
+        `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY}`
       );
       const dat = await response.json();
       console.log("dat", dat);

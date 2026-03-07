@@ -1,3 +1,4 @@
+import { nGetAllRoute } from "../utils/APIRoutes";
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import "../Styles/Nursery.css";
@@ -11,7 +12,7 @@ export default function Nursery() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:5001/api/authn/ngetAll");
+      const res = await fetch(nGetAllRoute);
       const res1 = await res.json();
       setData(res1);
     };
