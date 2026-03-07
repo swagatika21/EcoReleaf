@@ -1,4 +1,4 @@
-# EcoReleaf Revamp
+# EcoReleaf
 
 Full-stack EcoReleaf app with:
 - `client`: React + Vite frontend
@@ -56,6 +56,3 @@ npm run dev:client
 Frontend: `http://localhost:5173`
 Backend: `http://localhost:5001`
 Health check: `http://localhost:5001/api/health`
-
-## Security note
-If credentials were previously committed in `server/.env`, rotate them (especially DB credentials and JWT secret) before deploying.
