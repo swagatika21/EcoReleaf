@@ -9,144 +9,124 @@ import { useTranslation } from "react-i18next";
 import { dataEN } from "../language/Plants";
 import { dataHI } from "../language/PlantsHindi";
 import { dataOD } from "../language/PlantsOdia";
+
+const PLANT_META = [
+  { key: "Sunlight", icon: "fa-solid fa-sun",            label: "Sunlight" },
+  { key: "water",    icon: "fa-solid fa-droplet",         label: "Water" },
+  { key: "size",     icon: "fa-solid fa-ruler-vertical",  label: "Size" },
+];
+
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
-  const [jsonData, setJsonData] = useState([]);
-
   const navigate = useNavigate();
-  const [language, setLanguage] = useState("EN");
-  const { i18n } = useTranslation();
   const { t } = useTranslation();
 
-  const changeLanguage = (e) => {
-    const lang = e.target.value;
-    console.log("Selected Language:", lang);
-    setLanguage(lang);
-    // i18n.changeLanguage(lang);
-  };
   useEffect(() => {
-    const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    setWishlistItems(storedWishlist);
+    const stored = JSON.parse(localStorage.getItem("wishlist")) || [];
+    setWishlistItems(stored);
   }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const response = await fetch("./Plants.json");
-        // const data = await response.json();
-        language=="EN"?setJsonData(dataEN):language=="HI"?setJsonData(dataHI):setJsonData(dataOD)
-      } catch (error) {
-        console.error("Error fetching or parsing data: ", error);
-      }
-    };
 
-    fetchData();
-  }, [language]);
-  // Function to handle deletion of wishlist items
   const handleDelete = (Id) => {
-    console.log(Id);
-    const updatedWishlist = wishlistItems.filter((item) => item.Id !== Id);
-    setWishlistItems(updatedWishlist);
-
-    try {
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-    } catch (error) {
-      console.error("Error updating wishlist in local storage: ", error);
-    }
+    const updated = wishlistItems.filter((item) => item.Id !== Id);
+    setWishlistItems(updated);
+    localStorage.setItem("wishlist", JSON.stringify(updated));
   };
 
-  const visitWishlist = () => {
-    navigate("/plantrecom");
-  };
+  const renderRating = (rating) =>
+    Array.from({ length: 5 }, (_, i) => (
+      <FaLeaf key={i} color={i < rating ? "#22c55e" : "#d1d5db"} size={13} />
+    ));
 
-  const renderRating = (rating) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      if (i < rating) {
-        stars.push(<FaLeaf key={i} color="#65B741" />);
-      } else {
-        stars.push(<FaLeaf key={i} color="#e4e5e9" />);
-      }
-    }
-    return stars;
-  };
-
-  // Check if wishlist is empty before rendering items
+  /* ── Empty state ── */
   if (wishlistItems.length === 0) {
     return (
-      <div>
+      <>
         <NavbarWithLogin />
-        <div className="empty-wishlist">
-          <h3>Your wishlist is empty</h3>
-          {/* Display an image for empty wishlist */}
-          <img src="../Images/heart.png" alt="Empty Wishlist" />
-          <div className="d-block mx-auto">
-         
-            <button className="btn btn-outline-success" onClick={visitWishlist}>
-              View Recommendation
+        <main className="wl-page">
+          <div className="wl-empty">
+            <img src="../Images/heart.png" alt="Empty wishlist" className="wl-empty-img" />
+            <h3 className="wl-empty-title">Your wishlist is empty</h3>
+            <p className="wl-empty-desc">
+              Head back to recommendations and save the plants you love.
+            </p>
+            <button className="wl-btn wl-btn--primary" onClick={() => navigate("/plantrecom")}>
+              <i className="fa-solid fa-seedling" />
+              Browse Recommendations
             </button>
           </div>
-        </div>
-      </div>
+        </main>
+      </>
     );
   }
 
   return (
-    <div>
+    <>
       <NavbarWithLogin />
-      <div className="row">
-        {wishlistItems.map((plant) => (
-          <div key={plant.id} className="col-md-6">
-             {/* <div className="">
-            <select onChange={changeLanguage} className="form-select">
-              <option value="EN">English</option>
-              <option value="HI">HIndi</option>
-              <option value="OD">Odia</option>
-            </select>
-          </div> */}
-            <div className="wishlist-item w-50 m-2 mx-auto mt-3">
-              <div className="wishlist-info  text-center">
-                <div className="plant-image">
-                  <img src={plant.image} alt="plant" className="plant-img" />
+
+      <main className="wl-page">
+        {/* ── Header ── */}
+        <div className="wl-header">
+          <span className="wl-eyebrow">Saved plants</span>
+          <h1 className="wl-title">My Wishlist</h1>
+          <p className="wl-subtitle">
+            {wishlistItems.length} plant{wishlistItems.length !== 1 ? "s" : ""} saved
+          </p>
+        </div>
+
+        {/* ── Grid ── */}
+        <div className="wl-grid">
+          {wishlistItems.map((plant, i) => (
+            <div
+              className="wl-card"
+              key={plant.Id}
+              style={{ animationDelay: `${i * 0.06}s` }}
+            >
+              {/* Image */}
+              <div className="wl-card-img-wrap">
+                <img src={plant.image} alt={t(plant.name)} className="wl-card-img" />
+                {/* Rating floats over image */}
+                <div className="wl-card-rating">
+                  {renderRating(plant.Rating)}
                 </div>
-                <div>
-                  <p className="plant-name mt-2 mb-2">
-                    <strong className="mt-2">{t(plant.name)}</strong><br></br>
-                    <span className="rating">{renderRating(plant.Rating)}</span>
-                  </p>
-                  <p>
-                    <i
-                      className="fa-solid fa-sun p-2"
-                    ></i>
-                    {t(plant.Sunlight)}
-                  </p>
-                  <p>
-                    <i className="fa-solid fa-droplet p-2"></i>
-                    {t(plant.water)}
-                  </p>
-                  <p>
-                    <i className="fa-solid fa-ruler-vertical p-2"></i>
-                    {t(plant.size)}
-                  </p>
-                </div>
+              </div>
+
+              {/* Body */}
+              <div className="wl-card-body">
+                <h3 className="wl-card-name">{t(plant.name)}</h3>
+
+                <ul className="wl-card-meta">
+                  {PLANT_META.map(({ key, icon, label }) => (
+                    <li key={key} className="wl-card-meta-item">
+                      <span className="wl-card-meta-icon">
+                        <i className={icon} />
+                      </span>
+                      <span className="wl-card-meta-text">{t(plant[key])}</span>
+                    </li>
+                  ))}
+                </ul>
 
                 <button
-                  className="btn btn-outline-danger"
+                  className="wl-card-delete"
                   onClick={() => handleDelete(plant.Id)}
+                  aria-label="Remove from wishlist"
                 >
-                  Delete
+                  <i className="fa-solid fa-trash" />
+                  Remove
                 </button>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <button
-        className="btn btn-outline-success mx-auto d-block "
-        onClick={visitWishlist}
-      >
-        View Recommendation
-      </button>
-    </div>
+          ))}
+        </div>
+
+        {/* ── Footer action ── */}
+        <div className="wl-actions">
+          <button className="wl-btn wl-btn--outline" onClick={() => navigate("/plantrecom")}>
+            <i className="fa-solid fa-seedling" />
+            Browse More Plants
+          </button>
+        </div>
+      </main>
+    </>
   );
 };
 

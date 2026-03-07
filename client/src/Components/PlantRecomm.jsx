@@ -12,7 +12,11 @@ import { dataEN } from "../language/Plants";
 import { dataHI } from "../language/PlantsHindi";
 import { dataOD } from "../language/PlantsOdia";
 
-// console.log(dataHI)
+const LANGUAGES = [
+  { value: "EN", label: "English" },
+  { value: "HI", label: "Hindi" },
+  { value: "OD", label: "Odia" },
+];
 
 const PlantRecommendation = () => {
   const { search } = useLocation();
@@ -22,120 +26,131 @@ const PlantRecommendation = () => {
   const [jsonData, setJsonData] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [language, setLanguage] = useState("EN");
+  const [addedIds, setAddedIds] = useState(new Set());
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
   const { t } = useTranslation();
 
-  const changeLanguage = (e) => {
-    const lang = e.target.value;
-    console.log("Selected Language:", lang);
-    setLanguage(lang);
-    // i18n.changeLanguage(lang);
-  };
-
   useEffect(() => {
-    const fetchUserPreferences = async () => {
-      if (!localStorage.getItem("user-app")) {
-        navigate("/login");
-      } else {
-        // No need to access or set selectBox data here
-      }
-    };
-    fetchUserPreferences();
+    if (!localStorage.getItem("user-app")) navigate("/login");
   }, [navigate]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const response = await fetch("./Plants.json");
-        // const data = await response.json();
-        language=="EN"?setJsonData(dataEN):language=="HI"?setJsonData(dataHI):setJsonData(dataOD)
-      } catch (error) {
-        console.error("Error fetching or parsing data: ", error);
-      }
-    };
-
-    fetchData();
+    const data = language === "EN" ? dataEN : language === "HI" ? dataHI : dataOD;
+    setJsonData(data);
   }, [language]);
 
   const addToWishlist = (plant) => {
-    setWishlist([...wishlist, plant]);
-    let storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    storedWishlist.push(plant);
-    localStorage.setItem("wishlist", JSON.stringify(storedWishlist));
-    toast.success("Item added to wishlist!", {
+    if (addedIds.has(plant.Id)) return;
+    setWishlist((prev) => [...prev, plant]);
+    setAddedIds((prev) => new Set(prev).add(plant.Id));
+    const stored = JSON.parse(localStorage.getItem("wishlist")) || [];
+    stored.push(plant);
+    localStorage.setItem("wishlist", JSON.stringify(stored));
+    toast.success("Added to wishlist!", {
       position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 2000,
     });
   };
 
-  const handleViewWishlist = () => {
-    navigate("/wishlist", { state: { wishlist } });
-  };
+  const renderRating = (rating) =>
+    Array.from({ length: 5 }, (_, i) => (
+      <FaLeaf key={i} color={i < rating ? "#22c55e" : "#d1d5db"} size={13} />
+    ));
 
-  const renderRating = (rating) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      if (i < rating) {
-        stars.push(<FaLeaf key={i} color="#65B741" />);
-      } else {
-        stars.push(<FaLeaf key={i} color="#e4e5e9" />);
-      }
-    }
-    return stars;
-  };
+  const sorted = [...jsonData].sort((a, b) => b.Rating - a.Rating);
 
   return (
     <>
       <NavbarWithLogin />
-      <div className="container-fluid h-100 centered-content">
-        <h3 className="heading">Plant Recommendation</h3>
-        <div className="recomm-info">
-          <strong className="info">
-            {name && `Plant recommendation for ${name}`}
-          </strong>
-          <div className="">
-            <select onChange={changeLanguage} className="form-select">
-              <option value="EN">English</option>
-              <option value="HI">HIndi</option>
-              <option value="OD">Odia</option>
-            </select>
-          </div>
-        </div>
-        <div className="plant-container">
-          {jsonData
-            .slice()
-            .sort((a, b) => b.Rating - a.Rating)
-            .map((plant) => (
-              <div key={plant.Id} className="plant-card">
-                <div className="plant-info">
-                  <div className="plant-image">
-                    <img src={plant.image} alt="plant" />
-                  </div>
-                  <p className="mt-2"> <strong>{t(plant.name)}</strong></p>
-                  <p className="rating">{renderRating(plant.Rating)}</p>
-                </div>
-                <button
-                  className="btn btn-outline-success mx-auto d-block mt-0 mb-2"
-                  onClick={() => addToWishlist(plant)}
-                >
-                  <i className="fa-solid fa-circle-plus fa-xl"></i> Add to
-                  Wishlist
-                </button>
-              </div>
-            ))}
+
+      <main className="pr-page">
+        {/* ── Header ── */}
+        <div className="pr-header">
+          <span className="pr-eyebrow">Curated for you</span>
+          <h1 className="pr-title">Plant Recommendations</h1>
+          {name && (
+            <div className="pr-location-badge">
+              <i className="fa-solid fa-smog" />
+              Based on air quality in <strong>{name}</strong>
+            </div>
+          )}
         </div>
 
-        <div className="recomm-btn-cont">
-          <button className="recomm-btn" onClick={() => navigate("/nursery")}>
-            View Nursery
+        {/* ── Controls ── */}
+        <div className="pr-controls">
+          <div className="pr-lang-wrap">
+            <i className="fa-solid fa-globe pr-lang-icon" />
+            <select
+              className="pr-lang-select"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            >
+              {LANGUAGES.map(({ value, label }) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+            <i className="fa-solid fa-chevron-down pr-lang-chevron" />
+          </div>
+
+          <div className="pr-count">
+            {sorted.length} plant{sorted.length !== 1 ? "s" : ""} found
+          </div>
+        </div>
+
+        {/* ── Cards ── */}
+        <div className="pr-grid">
+          {sorted.map((plant, i) => {
+            const added = addedIds.has(plant.Id);
+            return (
+              <div
+                className="pr-card"
+                key={plant.Id}
+                style={{ animationDelay: `${i * 0.04}s` }}
+              >
+                {/* Image */}
+                <div className="pr-card-img-wrap">
+                  <img src={plant.image} alt={t(plant.name)} className="pr-card-img" />
+                  {/* Rating badge overlay */}
+                  <div className="pr-card-rating-badge">
+                    {renderRating(plant.Rating)}
+                  </div>
+                </div>
+
+                {/* Body */}
+                <div className="pr-card-body">
+                  <h3 className="pr-card-name">{t(plant.name)}</h3>
+
+                  <button
+                    className={`pr-card-btn ${added ? "pr-card-btn--added" : ""}`}
+                    onClick={() => addToWishlist(plant)}
+                    disabled={added}
+                  >
+                    <i className={`fa-solid ${added ? "fa-check" : "fa-circle-plus"}`} />
+                    {added ? "In Wishlist" : "Add to Wishlist"}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ── Bottom actions ── */}
+        <div className="pr-actions">
+          <button className="pr-btn pr-btn--outline" onClick={() => navigate("/nursery")}>
+            <i className="fa-solid fa-store" />
+            View Nurseries
           </button>
-          <button className="recomm-btn" onClick={handleViewWishlist}>
+          <button className="pr-btn pr-btn--primary" onClick={() => navigate("/wishlist", { state: { wishlist } })}>
+            <i className="fa-solid fa-heart" />
             Wishlist
+            {wishlist.length > 0 && (
+              <span className="pr-wishlist-count">{wishlist.length}</span>
+            )}
           </button>
         </div>
-        <ToastContainer />
-      </div>
+      </main>
+
+      <ToastContainer />
     </>
   );
 };

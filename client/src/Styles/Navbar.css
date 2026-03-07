@@ -1,80 +1,224 @@
+/* NAVBAR */
 
+.eco-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-.navbar {
-  background-color: #011e31  ;
-  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  padding: 14px 28px;
+
+  backdrop-filter: blur(10px);
+  background: rgba(1, 30, 49, 0.92);
+
+  color: white;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.logo {
-  font-size: 24px;
+/* BRAND */
+
+.eco-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  text-decoration: none;
+  color: white;
+
+  font-size: 22px;
   font-weight: bold;
 }
 
-.nav-list {
-  list-style-type: none;
-  display: flex;
-  gap: 20px;
+.eco-nav-brand-icon {
+  font-size: 24px;
+  color: #22c55e;
 }
 
-.nav-elements {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px;
-}
+/* NAV LINKS */
 
-.nav-elements i{
-  color: white;
-
-}
-
-.nav-elements:hover {
-  background-color: white ;
-  border-radius: 50%;
-  transform: scale(1.09); 
-  transition: transform 0.2s ease; 
-
-  i{
-    color: #011e31;
-  }
-}
-
-.nav-list li a {
-  text-decoration: none;
-  color: white;
+.eco-nav-list {
+  list-style: none;
   display: flex;
   align-items: center;
+  gap: 36px;   /* increased spacing */
 }
 
-.mobile-menu-button {
+/* LINKS */
+.eco-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 16px;
+  border-radius: 10px;
+
+  min-width: 120px; /* keeps spacing consistent */
+  justify-content: center;
+
+  transition: all 0.25s ease;
+}
+.eco-nav-link:hover {
+  background: white;
+  color: #011e31;
+  border: none;
+}
+.eco-nav-link i {
+  background: rgba(255,255,255,0.1);
+  padding: 6px;
+  border-radius: 6px;
+}
+
+/* ACTIVE LINK */
+
+.eco-nav-link--active {
+  color: white;
+  padding: 2px;
+  border: none;
+  background-color: none;
+}
+
+/* LOGOUT */
+
+.eco-nav-logout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 16px;
+  border-radius: 10px;
+
+  font-size: 15px;
+}
+
+.eco-nav-logout:hover {
+  background: white;
+  color: #011e31;
+}
+
+/* HAMBURGER */
+
+.eco-nav-hamburger {
   display: none;
+  flex-direction: column;
+  gap: 4px;
+
+  background: none;
+  border: none;
   cursor: pointer;
 }
 
+.eco-nav-hamburger span {
+  width: 24px;
+  height: 3px;
+  background: white;
+
+  border-radius: 2px;
+
+  transition: all 0.3s ease;
+}
+
+/* HAMBURGER ANIMATION */
+
+.eco-nav-hamburger--open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.eco-nav-hamburger--open span:nth-child(2) {
+  opacity: 0;
+}
+
+.eco-nav-hamburger--open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* MOBILE */
+
 @media (max-width: 768px) {
-  .nav-list {
-    display: none;
-    flex-direction: column;
-    background-color: #011e31;
+
+  .eco-nav-hamburger {
+    display: flex;
+  }
+
+  .eco-nav-list {
     position: absolute;
-    top: 60px;
+    top: 65px;
     left: 0;
+
     width: 100%;
-    padding: 10px 0;
-    z-index: 1; 
+
+    flex-direction: column;
+
+    background: rgba(1, 30, 49, 0.98);
+
+    padding: 20px 0;
+
+    display: none;
   }
 
-  .nav-list.open {
+  .eco-nav-list--open {
     display: flex;
   }
 
-  .mobile-menu-button {
-    display: flex;
-    z-index: 2; 
+  .eco-nav-link,
+  .eco-nav-logout {
+    justify-content: center;
+    font-size: 16px;
+  }
+
+}
+/* ── Add these to the bottom of your existing Navbar.css ── */
+
+/* Auth group — wraps Login + Sign Up side by side */
+.eco-nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+}
+
+/* Sign Up — filled green pill */
+.eco-nav-signup {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  border-radius: 8px;
+  background: var(--nav-active);
+  color: #0a0f0d;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s var(--ease);
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.eco-nav-signup:hover {
+  background: #16a34a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
+}
+
+/* Mobile: stack auth items full-width */
+@media (max-width: 768px) {
+  .eco-nav-auth {
+    flex-direction: column;
+    align-items: stretch;
+    margin-left: 0;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .eco-nav-signup {
+    padding: 11px 16px;
+    font-size: 14px;
+    border-radius: 10px;
+    justify-content: flex-start;
   }
 }

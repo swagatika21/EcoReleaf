@@ -1,0 +1,82 @@
+/* ─────────────────────────────────────────
+   global.css
+   Import this ONCE in your app entry point:
+   e.g. main.jsx or App.jsx → import "./Styles/global.css"
+   Remove @import and :root from all other CSS files.
+───────────────────────────────────────── */
+
+
+:root {
+  /* ── Greens ── */
+  --green-deep:    #183d20;
+  --green-mid:     #285430;
+  --green-bright:  #22c55e;
+  --green-light:   #a4be7b;
+  --green-pale:    #f0fdf4;
+
+  /* ── Backgrounds ── */
+  --cream:         #faf9f5;
+
+  /* ── Text ── */
+  --text-dark:     #111a14;
+  --text-muted:    #557360;
+
+  /* ── Navbar specific ── */
+  --nav-bg:           #0a0f0d;
+  --nav-border:       rgba(164, 190, 123, 0.12);
+  --nav-text:         rgba(240, 253, 244, 0.75);
+  --nav-text-hover:   #f0fdf4;
+  --nav-active:       #22c55e;
+  --nav-pill-bg:      rgba(34, 197, 94, 0.1);
+  --nav-pill-border:  rgba(34, 197, 94, 0.25);
+
+  /* ── Typography ── */
+  --font-display:  'Playfair Display', Georgia, serif;
+  --font-body:     'DM Sans', sans-serif;
+
+  /* ── Animation ── */
+  --ease:          cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Base reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Shared fade-up animation used across pages ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg); }
+  35%       { transform: rotate(8deg); }
+  65%       { transform: rotate(-5deg); }
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.65); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

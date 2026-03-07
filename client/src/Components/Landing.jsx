@@ -8,88 +8,113 @@ import NavbarWithoutLogin from "./NavbarWithoutLogin";
 import NavbarWithLogin from "./NavbarWithLogin";
 import Context from "../context/Context";
 
+const FEATURES = [
+  {
+    num: "01",
+    title: "Join the Movement",
+    desc: "Register as a Nursery Owner or Contributor and become part of the green revolution shaping a cleaner tomorrow.",
+  },
+  {
+    num: "02",
+    title: "Explore & Showcase",
+    desc: "Discover Air Quality Index data for plants as a contributor, or showcase your nursery profile to reach eco-conscious customers.",
+  },
+  {
+    num: "03",
+    title: "Connect & Impact",
+    desc: "Receive personalized plant recommendations and connect with nurseries to make a tangible, positive impact on the environment.",
+  },
+];
+
 function Landing() {
   const navigate = useNavigate();
   const contextData = useContext(Context);
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const user = JSON.parse(localStorage.getItem("user-app"));
 
-  const user=JSON.parse(localStorage.getItem("user-app"))
-  console.log(user);
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <>
-      {JSON.parse(localStorage.getItem("user-app")) ? <NavbarWithLogin /> : <NavbarWithoutLogin />}
-      <section id="top">
-        <div className="container-top">
-          <img
-            src="../Images/leafbg.png"
-            className="cont-top"
-            alt="Background"
-          />
-          <div className="text-overlay">
-          {localStorage.getItem("user-app") && (
-  <h2 className="quote-top">Welcome, {user.fullname} !</h2>
-)}
-            <h3 className="quote-top"> 
-              “To plant a garden is to believe in tomorrow.”
-            </h3>
+      {user ? <NavbarWithLogin /> : <NavbarWithoutLogin />}
 
-            <p>
-              Join EcoReleaf as we try to combat pollution by making the earth a
-              more green place.
-            </p>
-            {!JSON.parse(localStorage.getItem("user-app")) && (
-              <div>
-                <h2>JOIN US AS </h2>  
-                <button
-                  className="join-btn"
-                  onClick={() => navigate("/signup")}
-                >
-                  CONTRIBUTOR
+      {/* ── Hero ── */}
+      <section className="hero" id="top">
+        <div className="hero-bg">
+          <img src="../Images/leafbg.png" className="hero-img" alt="Green background" />
+          <div className="hero-overlay" />
+        </div>
+
+        <div className="hero-content">
+          {user && (
+            <div className="hero-welcome">
+              <span className="hero-welcome-dot" />
+              Welcome back, <strong>{user.fullname}</strong>
+            </div>
+          )}
+
+          <h1 className="hero-headline">
+            Plant Today.<br />
+            <span className="hero-accent">Breathe Tomorrow.</span>
+          </h1>
+
+          <blockquote className="hero-quote">
+            "To plant a garden is to believe in tomorrow."
+          </blockquote>
+
+          <p className="hero-sub">
+            Join EcoReleaf as we combat pollution by making the earth a greener, healthier place — one tree at a time.
+          </p>
+
+          {!user && (
+            <div className="hero-cta">
+              <p className="hero-cta-label">Join us as</p>
+              <div className="hero-buttons">
+                <button className="hero-btn hero-btn--primary" onClick={() => navigate("/signup")}>
+                  <span className="hero-btn-icon">🌱</span>
+                  Contributor
                 </button>
-                <button
-                  className="join-btn"
-                  onClick={() => navigate("/nurserysignup")}
-                >
-                  NURSERY OWNER
+                <button className="hero-btn hero-btn--outline" onClick={() => navigate("/nurserysignup")}>
+                  <span className="hero-btn-icon">🏡</span>
+                  Nursery Owner
                 </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
+
+        {/* Scroll hint */}
+        <div className="hero-scroll-hint">
+          <div className="hero-scroll-line" />
+          <span>Scroll</span>
         </div>
       </section>
 
+      {/* ── Product Description ── */}
       <ProdDesc />
-      <div className="feature-cont">
-        <div className="feature">
-          <div className="num">01</div>
-          <p>
-            Join our community by registering as a Nursery owner or contributor
-            and become a part of the green revolution.
-          </p>
-          <button onClick={scrollToTop} className="btn btn-success">JOIN NOW</button>
+
+      {/* ── Features ── */}
+      <section className="features-section">
+        <div className="features-header">
+          <span className="features-eyebrow">How it works</span>
+          <h2 className="features-title">Three steps to a greener planet</h2>
         </div>
-        <div className="feature">
-          <div className="num">02</div>
-          <p>
-            Explore detailed Air Quality Index (AQI) information for plants if
-            you are a contributor. If you are a nursery owner, showcase your
-            profile to reach potential customers and promote your nursery.
-          </p>
-          <button onClick={scrollToTop} className="btn btn-success">JOIN NOW</button>
+
+        <div className="features-grid">
+          {FEATURES.map(({ num, title, desc }) => (
+            <div className="feature-card" key={num}>
+              <div className="feature-num">{num}</div>
+              <h3 className="feature-title">{title}</h3>
+              <p className="feature-desc">{desc}</p>
+              <button onClick={scrollToTop} className="feature-btn">
+                Join Now
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          ))}
         </div>
-        <div className="feature">
-          <div className="num">03</div>
-          <p>
-            Receive personalized plant recommendations tailored to your
-            preferences. Connect with nurseries to make a positive impact on the
-            environment and contribute to a greener planet.
-          </p>
-          <button onClick={scrollToTop} className="btn btn-success">JOIN NOW</button>
-        </div>
-      </div>
+      </section>
 
       <Footer />
     </>

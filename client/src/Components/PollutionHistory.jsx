@@ -1,143 +1,196 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Chart from "chart.js/auto";
 import NavbarWithLogin from "./NavbarWithLogin";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "../Styles/PollutionHistory.css";
+
+const DATASETS_META = [
+  { key: "co",  label: "Carbon Monoxide",   symbol: "CO",  color: "#ef4444" },
+  { key: "no",  label: "Nitrogen Monoxide", symbol: "NO",  color: "#3b82f6" },
+  { key: "no2", label: "Nitrogen Dioxide",  symbol: "NO₂", color: "#f59e0b" },
+  { key: "o3",  label: "Ozone",             symbol: "O₃",  color: "#22c55e" },
+  { key: "so2", label: "Sulphur Dioxide",   symbol: "SO₂", color: "#a855f7" },
+  { key: "nh3", label: "Ammonia",           symbol: "NH₃", color: "#06b6d4" },
+];
 
 const PollutionHistory = () => {
   const [pollutionHistory, setPollutionHistory] = useState([]);
+  const chartRef = useRef(null);
+  const chartInstanceRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedHistory = localStorage.getItem("pollution_history");
-    if (storedHistory) {
-      const parsedHistory = JSON.parse(storedHistory);
-      setPollutionHistory(parsedHistory);
-    }
+    const stored = localStorage.getItem("pollution_history");
+    if (stored) setPollutionHistory(JSON.parse(stored));
   }, []);
 
   useEffect(() => {
-    if (pollutionHistory.length > 0) {
-      renderChart();
-    }
-  }, [pollutionHistory]);
+    if (pollutionHistory.length > 0 && chartRef.current) {
+      // Destroy previous instance if exists
+      if (chartInstanceRef.current) chartInstanceRef.current.destroy();
 
-  const renderChart = () => {
-    const labels = pollutionHistory.map((entry) => entry.dateTime);
-    const coData = pollutionHistory.map((entry) => entry.aqi.co);
-    const noData = pollutionHistory.map((entry) => entry.aqi.no);
-    const no2Data = pollutionHistory.map((entry) => entry.aqi.no2);
-    const o3Data = pollutionHistory.map((entry) => entry.aqi.o3);
-    const so2Data = pollutionHistory.map((entry) => entry.aqi.so2);
-    const nh3Data = pollutionHistory.map((entry) => entry.aqi.nh3);
+      const labels = pollutionHistory.map((e) => e.dateTime);
 
-    const ctx = document.getElementById("pollutionChart");
-
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Carbon Monoxide (CO)",
-            data: coData,
-            borderColor: "red",
+      chartInstanceRef.current = new Chart(chartRef.current, {
+        type: "line",
+        data: {
+          labels,
+          datasets: DATASETS_META.map(({ key, label, color }) => ({
+            label,
+            data: pollutionHistory.map((e) => e.aqi[key]),
+            borderColor: color,
+            backgroundColor: color + "18",
+            borderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: color,
+            tension: 0.4,
             fill: false,
-          },
-          {
-            label: "Nitrogen Monoxide (NO)",
-            data: noData,
-            borderColor: "blue",
-            fill: false,
-          },
-          {
-            label: "Nitrogen Dioxide (NO2)",
-            data: no2Data,
-            borderColor: "green",
-            fill: false,
-          },
-          {
-            label: "Ozone (O3)",
-            data: o3Data,
-            borderColor: "orange",
-            fill: false,
-          },
-          {
-            label: "Sulphur Dioxide (SO2)",
-            data: so2Data,
-            borderColor: "purple",
-            fill: false,
-          },
-          {
-            label: "Ammonia (NH3)",
-            data: nh3Data,
-            borderColor: "brown",
-            fill: false,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            display: true,
-            title: {
-              display: true,
-              text: "Date/Time",
+          })),
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: "index", intersect: false },
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                font: { family: "'DM Sans', sans-serif", size: 12 },
+                color: "#557360",
+                usePointStyle: true,
+                pointStyleWidth: 8,
+                padding: 20,
+              },
+            },
+            tooltip: {
+              backgroundColor: "#0f1f14",
+              titleColor: "#f0fdf4",
+              bodyColor: "#a4be7b",
+              borderColor: "rgba(164,190,123,0.2)",
+              borderWidth: 1,
+              padding: 12,
+              titleFont: { family: "'DM Sans', sans-serif", size: 12 },
+              bodyFont: { family: "'DM Sans', sans-serif", size: 12 },
             },
           },
-          y: {
-            display: true,
-            title: {
-              display: true,
-              text: "AQI",
+          scales: {
+            x: {
+              grid: { color: "rgba(164,190,123,0.08)" },
+              ticks: {
+                color: "#557360",
+                font: { family: "'DM Sans', sans-serif", size: 11 },
+                maxRotation: 30,
+              },
+              title: {
+                display: true,
+                text: "Date / Time",
+                color: "#557360",
+                font: { family: "'DM Sans', sans-serif", size: 12 },
+              },
+            },
+            y: {
+              grid: { color: "rgba(164,190,123,0.08)" },
+              ticks: {
+                color: "#557360",
+                font: { family: "'DM Sans', sans-serif", size: 11 },
+              },
+              title: {
+                display: true,
+                text: "Concentration (μg/m³)",
+                color: "#557360",
+                font: { family: "'DM Sans', sans-serif", size: 12 },
+              },
             },
           },
         },
-      },
-    });
-  };
+      });
+    }
+
+    return () => {
+      if (chartInstanceRef.current) chartInstanceRef.current.destroy();
+    };
+  }, [pollutionHistory]);
 
   const clearHistory = () => {
     localStorage.removeItem("pollution_history");
     setPollutionHistory([]);
   };
 
-  const viewAQI = () => {
-    navigate("/airquality"); 
-   };
+  // Latest snapshot for summary row
+  const latest = pollutionHistory[pollutionHistory.length - 1]?.aqi;
 
   return (
     <>
       <NavbarWithLogin />
-      <div className="text-center mt-4">
-        <h3>Pollution History</h3>
-      </div>
 
-      <div className="card p-2 m-3 w-75 mx-auto">
+      <main className="ph-page">
+        {/* ── Page header ── */}
+        <div className="ph-header">
+          <span className="ph-eyebrow">Your Records</span>
+          <h1 className="ph-title">Pollution History</h1>
+          {pollutionHistory.length > 0 && (
+            <p className="ph-subtitle">
+              {pollutionHistory.length} snapshot{pollutionHistory.length !== 1 ? "s" : ""} saved · Last recorded{" "}
+              <strong>{pollutionHistory[pollutionHistory.length - 1].dateTime}</strong>
+            </p>
+          )}
+        </div>
+
         {pollutionHistory.length > 0 ? (
           <>
-            <canvas id="pollutionChart" style={{ maxHeight: "500px" }} />
-            <div className=" mt-3 mb-2 mx-auto d-block">
-              <button className="btn btn-outline-danger" onClick={clearHistory}>
-              <i className="fa-solid fa-trash m-2"></i>
+            {/* ── Latest snapshot pills ── */}
+            <div className="ph-snapshot">
+              {DATASETS_META.map(({ key, symbol, color }) => (
+                <div className="ph-snap-pill" key={key} style={{ borderColor: color + "40" }}>
+                  <span className="ph-snap-symbol" style={{ color }}>{symbol}</span>
+                  <span className="ph-snap-value">{latest?.[key] ?? "—"}</span>
+                  <span className="ph-snap-unit">μg/m³</span>
+                </div>
+              ))}
+            </div>
+
+            {/* ── Chart card ── */}
+            <div className="ph-chart-card">
+              <div className="ph-chart-header">
+                <span className="ph-chart-title">Pollutant Trends</span>
+                <span className="ph-live-badge">
+                  <span className="ph-live-dot" />
+                  Live data
+                </span>
+              </div>
+              <div className="ph-chart-wrap">
+                <canvas ref={chartRef} />
+              </div>
+            </div>
+
+            {/* ── Actions ── */}
+            <div className="ph-actions">
+              <button className="ph-btn ph-btn--ghost-danger" onClick={clearHistory}>
+                <i className="fa-solid fa-trash" />
                 Clear History
               </button>
-              <button className=" ms-2 btn btn-outline-dark" onClick={viewAQI}>
-              <i className="fa-solid fa-smog m-2"></i>
+              <button className="ph-btn ph-btn--primary" onClick={() => navigate("/airquality")}>
+                <i className="fa-solid fa-smog" />
                 View AQI Info
               </button>
             </div>
           </>
         ) : (
-          <div className="text-center mt-3">
-            <p>No pollution history available.</p>
-            <button className="btn btn-outline-dark" onClick={viewAQI}>
-                View AQI Info
-              </button>
+          /* ── Empty state ── */
+          <div className="ph-empty">
+            <div className="ph-empty-icon">🌿</div>
+            <h3 className="ph-empty-title">No history yet</h3>
+            <p className="ph-empty-desc">
+              Save an AQI snapshot from the Air Quality page and it will appear here.
+            </p>
+            <button className="ph-btn ph-btn--primary" onClick={() => navigate("/airquality")}>
+              <i className="fa-solid fa-smog" />
+              Check Air Quality
+            </button>
           </div>
         )}
-      </div>
+      </main>
     </>
   );
 };

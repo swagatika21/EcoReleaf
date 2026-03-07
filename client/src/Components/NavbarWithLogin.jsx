@@ -1,73 +1,73 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../Styles/Navbar.css";
 import Context from "../context/Context";
 
+const NAV_LINKS = [
+  { to: "/", icon: "fa-solid fa-house", label: "Home" },
+  { to: "/airquality", icon: "fa-solid fa-smog", label: "Air Quality" },
+  { to: "/pollution-history", icon: "fa-solid fa-clock-rotate-left", label: "History" },
+];
+
 function NavbarWithLogin() {
   const navigate = useNavigate();
-  const contextData=useContext(Context)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const contextData = useContext(Context);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
-  const handleLogout = () => {  
+  const handleLogout = () => {
     localStorage.clear();
-    contextData.setLogin(false)
+    contextData.setLogin(false);
     navigate("/");
   };
 
+  const isActive = (path) =>
+    path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
+
   return (
-    <nav className={`navbar ${mobileMenuOpen ? "collapsed" : ""}`}>
-      <div className="logo">
-        <i className="fa-brands fa-envira"></i>
-        EcoReleaf
-      </div>
-      <ul className={`nav-list ${mobileMenuOpen ? "open" : ""}`}>
-        <div>
-          <li>
-            <Link to="/" className="nav-elements">
-              <i className="fa-solid fa-house "></i>
-              {/* <span>Home</span> */}
+    <nav className="eco-nav">
+
+      {/* Brand */}
+      <Link to="/" className="eco-nav-brand">
+        <i className="fa-brands fa-envira eco-nav-brand-icon"></i>
+        <span>EcoReleaf</span>
+      </Link>
+
+      {/* Nav Links */}
+      <ul className={`eco-nav-list ${mobileOpen ? "eco-nav-list--open" : ""}`}>
+        {NAV_LINKS.map(({ to, icon, label }) => (
+          <li key={to}>
+            <Link
+              to={to}
+              className={`eco-nav-link ${isActive(to) ? "eco-nav-link--active" : ""}`}
+              onClick={() => setMobileOpen(false)}
+            >
+              <i className={icon}></i>
+              <span className="eco-nav-link-label">{label}</span>
             </Link>
           </li>
-        </div>
-        {/* user profile */}
-        {/* <div>
-          <li className="nav-elements">
-            <Link to="/UserProfile" className="nav-link">
-              <i className="fa-solid fa-circle-user"></i>
-            </Link>
-          </li>
-        </div> */}
-        <div>
-          <li className="nav-elements">
-            <Link to="/airquality" className="nav-link">
-              <i className="fa-solid fa-smog"></i> 
-            </Link>
-          </li>
-        </div>
-        <div>
-          <li className="nav-elements">
-            <Link to="/pollution-history" className="nav-link">
-              <i className="fa-solid fa-clock-rotate-left"></i>
-            </Link>
-          </li>
-        </div>
-        <div>
-          <li className="nav-elements">
-            <i className="fa-solid fa-right-from-bracket" onClick={handleLogout}></i>
-            {/* <span >Logout</span> */}
-          </li>
-        </div>
+        ))}
+
+        {/* Logout */}
+        <li>
+          <button className="eco-nav-logout" onClick={handleLogout}>
+            <i className="fa-solid fa-right-from-bracket"></i>
+            <span className="eco-nav-link-label">Logout</span>
+          </button>
+        </li>
       </ul>
-      <div
-        className={`mobile-menu-button ${mobileMenuOpen ? "open" : ""}`}
-        onClick={toggleMobileMenu}
+
+      {/* Hamburger */}
+      <button
+        className={`eco-nav-hamburger ${mobileOpen ? "eco-nav-hamburger--open" : ""}`}
+        onClick={() => setMobileOpen(!mobileOpen)}
+        aria-label="Toggle Menu"
       >
-        <i className="fa-solid fa-bars bar fa-2x"></i>
-      </div>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
     </nav>
   );
 }

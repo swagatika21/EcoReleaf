@@ -1,179 +1,268 @@
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+/* Uses variables from global.css — no @import or :root needed here */
+
+/* ── Page layout ── */
+.ud-page {
+  display: flex;
+  min-height: 100vh;
 }
 
-body,
-html {
-    overflow-x: hidden;
-}
-.user-icon {
-    margin: 0 auto;
-    padding: 5px 20px;
-    margin-left: 63%; 
-    transform: translateX(-50%);
-    color: #285430;
+/* ── Left aside (image panel) ── */
+.ud-aside {
+  position: relative;
+  width: 42%;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
-.head-user{
-    text-align: center;
-    color: #285430;
-    font-weight: bold;
-
-}
-.basic{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 10px;
+.ud-aside-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-input,select{
-    margin-top: 5px;
-    border: 1.8px solid  #285430;
-    border-radius: 4px;
-    padding: 10px;
+.ud-aside-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(15, 35, 18, 0.55) 0%,
+    rgba(24, 61, 32, 0.75) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 48px 40px;
 }
 
-label {
-    font-weight: bold;
-    font-size: 2.4vmin;
-    color: #285430;
-    padding: 10px;
+.ud-aside-text {
+  color: white;
+  animation: fadeUp 0.9s var(--ease) both;
 }
 
-.main {
-    /* width: 90vw; */
-    display: flex;
+.ud-aside-eyebrow {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green-bright);
+  margin-bottom: 12px;
 }
 
-.image {
-    width: 50%;
-    height: auto; 
-    object-fit: cover;
-    background-color: #c8e3f3;
+.ud-aside-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 600;
+  color: #f0fdf4;
+  margin: 0 0 14px;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
-.form {
-    width: 100%;
-    height: fit-content;
-    padding: 25px;
-    overflow: hidden;
+.ud-aside-sub {
+  font-size: 14px;
+  color: rgba(240, 253, 244, 0.7);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 300px;
+  margin: 0;
 }
 
-.form-body {
-    background-color: white;
-    padding: 10px 5px;
+/* ── Form panel ── */
+.ud-form-panel {
+  flex: 1;
+  background: var(--cream);
+  overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 32px 64px;
 }
 
-.inp-field {
-    display: flex;
-    flex-direction: column;
-    width: calc(100%/2 - 15px);
-    padding: 5px;
+.ud-form-inner {
+  width: 100%;
+  max-width: 560px;
+  animation: fadeUp 0.7s 0.1s var(--ease) both;
 }
 
-::placeholder {
-    font-size: 2vmin;
-    padding: 5px;
+/* ── Form header ── */
+.ud-form-header {
+  text-align: center;
+  margin-bottom: 24px;
 }
 
-img {
-    
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.ud-form-icon {
+  font-size: 40px;
+  color: var(--green-mid);
+  margin-bottom: 10px;
 }
 
-.user-reg {
-    
-        margin: 40px auto;
-        padding: 5px 20px;
-        border: none;
-        border-radius: 5px;
-        color: white;
-        height: 7vh;
-        display: flex;
-        align-items: center; 
-        justify-content: center;
-        text-align: center;
-        font-size: 2.7vmin;
-        background-color: #285430;
+.ud-eyebrow {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green-bright);
+  margin-bottom: 6px;
 }
 
-.user-reg:hover{
-    color:#285430;
-    /* background-color: #A4BE7B; */
+.ud-form-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
 }
 
-.checkbox-group {
-    border: 1px solid;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: 200;
-    font-size: 2vmin;
-    transition: background-color 0.3s ease;
-  }
-  .inp-field {
-    margin-bottom: 20px;
-  }
-  /* .checkbox-group label:hover {
-    background-color: #f9f9f9;
-  } */
-  
-  input [type="checkbox"]{
-    padding: 3px;
-  }
-
-@media only screen and (max-width:1000px) {
-    ::placeholder {
-        font-size: 2vmin;
-        padding: 5px;
-    }
-    .image{
-        display: none;
-    }
-    .inp-field {
-        width: calc(100% - 15px);
-    }
-   
+.ud-form-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
 }
 
-@media only screen and (max-width:650px) {
-    .user-icon {
-        margin: 0 auto;
-        padding: 5px 20px;
-        margin-left: 60%; 
-        transform: translateX(-50%);
-        color: #285430;
-    }
-    .user-reg {
-            padding: 20px;
-        border: none;
-        border-radius: 5px;
-        color: whitesmoke;
-        height: 7vh;
-        width: 24vh;
-        display: flex;
-        align-items: center; 
-        justify-content: center;
-        text-align: center;
-        font-size: 19px;
-        background-color: #285430;
+.ud-form-link {
+  color: var(--green-mid);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
+.ud-form-link:hover { color: var(--green-bright); }
 
+/* ── Role badge ── */
+.ud-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
 
-    .main {
-        flex-direction: column;
-    }
+/* ── Fields grid ── */
+.ud-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
 
-     .image{
-        display: none;
-    }
-    .inp-field {
-        width: calc(100% - 15px);
+.ud-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+  margin-bottom: 28px;
+}
 
-    }
+/* ── Individual field ── */
+.ud-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 0;
+}
+
+.ud-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dark);
+  letter-spacing: 0.02em;
+}
+
+.ud-input-wrap {
+  position: relative;
+}
+
+.ud-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid rgba(40, 84, 48, 0.2);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-dark);
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.ud-input::placeholder {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.ud-input:focus {
+  outline: none;
+  border-color: var(--green-bright);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+/* Password toggle */
+.ud-toggle-pwd {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.ud-toggle-pwd:hover { color: var(--green-mid); }
+
+.ud-input:has(+ .ud-toggle-pwd),
+input[type="password"].ud-input {
+  padding-right: 36px;
+}
+
+/* ── Submit button ── */
+.ud-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: var(--green-mid);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+
+.ud-submit:hover:not(:disabled) {
+  background: var(--green-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(40, 84, 48, 0.22);
+}
+
+.ud-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .ud-aside { display: none; }
+  .ud-form-panel { padding: 40px 24px 64px; }
+}
+
+@media (max-width: 560px) {
+  .ud-fields-grid { grid-template-columns: 1fr; }
+  .ud-form-panel { padding: 32px 18px 56px; }
 }
