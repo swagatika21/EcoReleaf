@@ -185,4 +185,4 @@ This project is licensed under the MIT License. See [LICENSE](./LICENSE) for det
 
 ---
 
-# Made with 💚 for the planet · Bhubaneswar, India
+## Made with 💚 for the planet · Bhubaneswar, India
