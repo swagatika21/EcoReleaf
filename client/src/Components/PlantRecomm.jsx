@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import NavbarWithLogin from "./NavbarWithLogin";
+import Navbar from "./Navbar";
 import "../Styles/PlantRecomm.css";
 import { FaLeaf } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
@@ -61,7 +61,7 @@ const PlantRecommendation = () => {
 
   return (
     <>
-      <NavbarWithLogin />
+      <Navbar />
 
       <main className="pr-page">
         {/* ── Header ── */}

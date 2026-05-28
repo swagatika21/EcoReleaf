@@ -1,74 +1,352 @@
+/* Uses variables from global.css — no @import or :root needed */
 
-.login-container {
-  width: 400px;
-  margin: 0 auto;
-  margin-top: 50px;
-  padding: 30px;
-  border: 1px solid #a4be7b;
-  color: #285430;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  background-color: #fff;
-
-  button {
-    margin-top: 30px;
-    padding: 12px 24px;
-    font-size: 18px;
-    background-color: #285430;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #a4be7b;
-  }
+/* ── Page layout ── */
+.lg-page {
+  display: flex;
+  min-height: 100vh;
 }
 
-.login-form {
+/* ─────────────────────────────────────────
+   Left aside — decorative green panel
+───────────────────────────────────────── */
+.lg-aside {
+  width: 42%;
+  flex-shrink: 0;
+  background: var(--green-mid);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Ambient orbs */
+.lg-aside-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.lg-aside-orb--1 {
+  width: 400px; height: 400px;
+  top: -80px; left: -80px;
+  background: radial-gradient(circle, rgba(34,197,94,0.3) 0%, transparent 70%);
+  animation: orbFloat 10s ease-in-out infinite alternate;
+}
+
+.lg-aside-orb--2 {
+  width: 300px; height: 300px;
+  bottom: -60px; right: -40px;
+  background: radial-gradient(circle, rgba(164,190,123,0.2) 0%, transparent 70%);
+  animation: orbFloat 7s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes orbFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(16px, 24px) scale(1.07); }
+}
+
+.lg-aside-content {
+  position: relative;
+  z-index: 1;
+  padding: 48px 44px;
+  animation: fadeUp 0.8s var(--ease) both;
+}
+
+.lg-aside-leaf {
+  display: inline-block;
+  font-size: 44px;
+  margin-bottom: 20px;
+  animation: sway 3.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.lg-aside-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 600;
+  color: #f0fdf4;
+  margin: 0 0 14px;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.lg-aside-sub {
+  font-size: 14px;
+  color: rgba(240,253,244,0.65);
+  line-height: 1.75;
+  font-weight: 300;
+  margin: 0 0 28px;
+  max-width: 280px;
+}
+
+/* Feature pills */
+.lg-aside-pills {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-label {
-  margin-top: 20px;
-  color: #285430;
-  font-weight: bold;
-  font-size: 18px;
+.lg-aside-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(240,253,244,0.8);
+  font-weight: 400;
 }
 
-input {
-  margin-top: 10px;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #a4be7b;
-  border-radius: 8px;
-  outline-color: #a4be7b;
-  transition: border-color 0.3s;
+.lg-aside-pill-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  flex-shrink: 0;
+  animation: livePulse 2s ease-in-out infinite;
 }
 
-input:focus {
-  border-color: #285430;
+.lg-aside-pill:nth-child(2) .lg-aside-pill-dot { animation-delay: 0.4s; }
+.lg-aside-pill:nth-child(3) .lg-aside-pill-dot { animation-delay: 0.8s; }
+
+/* ─────────────────────────────────────────
+   Right form panel
+───────────────────────────────────────── */
+.lg-form-panel {
+  flex: 1;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  overflow-y: auto;
 }
 
-
-
-.login-alt {
-  color: #011e31;
-  font-weight: bold;
-  padding: 10px;
-  margin-top: 16px;
+.lg-form-inner {
+  width: 100%;
+  max-width: 400px;
+  animation: fadeUp 0.7s 0.1s var(--ease) both;
 }
 
-.login-alt :hover {
-  text-decoration: underline;
-  color: #053352;
+/* Header */
+.lg-form-header {
+  text-align: center;
+  margin-bottom: 32px;
 }
 
-.login-alt a {
+.lg-eyebrow {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--green-bright);
+  margin-bottom: 8px;
+}
+
+.lg-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+
+.lg-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.lg-link {
+  color: var(--green-mid);
+  font-weight: 500;
   text-decoration: none;
-  color: #011e31;
+  transition: color 0.2s;
+}
+.lg-link:hover { color: var(--green-bright); }
+
+/* ─────────────────────────────────────────
+   Form fields
+───────────────────────────────────────── */
+.lg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.lg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lg-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lg-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dark);
+  letter-spacing: 0.02em;
+}
+
+.lg-forgot {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.lg-forgot:hover { color: var(--green-mid); }
+
+.lg-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.lg-input-icon {
+  position: absolute;
+  left: 13px;
+  color: var(--text-muted);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.lg-input {
+  width: 100%;
+  padding: 11px 14px 11px 36px;
+  border: 1.5px solid rgba(40,84,48,0.2);
+  border-radius: 8px;
+  background: white;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-dark);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.lg-input::placeholder { color: #9ca3af; font-size: 12px; }
+
+.lg-input:focus {
+  outline: none;
+  border-color: var(--green-bright);
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+}
+
+.lg-input--pwd { padding-right: 40px; }
+
+.lg-toggle-pwd {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+.lg-toggle-pwd:hover { color: var(--green-mid); }
+
+/* Submit */
+.lg-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  padding: 13px;
+  margin-top: 4px;
+  border: none;
+  border-radius: 8px;
+  background: var(--green-mid);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+
+.lg-submit:hover:not(:disabled) {
+  background: var(--green-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(40,84,48,0.22);
+}
+
+.lg-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ─────────────────────────────────────────
+   Divider
+───────────────────────────────────────── */
+.lg-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 20px;
+}
+
+.lg-divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(40,84,48,0.12);
+}
+
+.lg-divider-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────
+   Register options
+───────────────────────────────────────── */
+.lg-register-opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.lg-reg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(40,84,48,0.2);
+  background: white;
+  color: var(--green-mid);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.25s var(--ease);
+}
+
+.lg-reg-btn:hover {
+  background: var(--green-pale);
+  border-color: rgba(40,84,48,0.4);
+  transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────
+   Responsive
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .lg-aside { display: none; }
+  .lg-form-panel { padding: 40px 24px; align-items: flex-start; }
+}
+
+@media (max-width: 400px) {
+  .lg-register-opts { grid-template-columns: 1fr; }
 }

@@ -31,7 +31,7 @@
   );
   display: flex;
   align-items: flex-end;
-  padding: 48px 40px;
+  padding: 44px 40px;
 }
 
 .ud-aside-text {
@@ -94,7 +94,8 @@
 .ud-form-icon {
   font-size: 40px;
   color: var(--green-mid);
-  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 2px;
 }
 
 .ud-eyebrow {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import "../Styles/UserDet.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -5,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { registerRoute } from "../utils/APIRoutes";
-import NavbarWithoutLogin from "./NavbarWithoutLogin";
+import Navbar from "./Navbar";
 import Context from "../context/Context";
 
 const FIELDS = [
@@ -81,7 +82,7 @@ export default function UserDet() {
 
   return (
     <>
-      <NavbarWithoutLogin />
+      {/* <Navbar /> */}
 
       <main className="ud-page">
         {/* ── Left panel ── */}

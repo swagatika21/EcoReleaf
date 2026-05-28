@@ -5,9 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NavbarWithLogin from "./NavbarWithLogin";
 import { OPENWEATHER_API_KEY } from "../utils/config";
-
+import Navbar from "./Navbar";
 const STATUS_META = {
   Good:      { color: "#22c55e", bg: "rgba(34,197,94,0.12)",   border: "rgba(34,197,94,0.3)",   icon: "😊", desc: "Air quality is satisfactory." },
   Fair:      { color: "#f59e0b", bg: "rgba(245,158,11,0.12)",  border: "rgba(245,158,11,0.3)",  icon: "🙂", desc: "Acceptable air quality." },
@@ -91,7 +90,7 @@ const AirQuality = () => {
 
   return (
     <>
-      <NavbarWithLogin />
+      <Navbar />
 
       <main className="aq-page">
         {/* ── Header card ── */}

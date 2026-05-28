@@ -2,7 +2,7 @@ import { nGetAllRoute } from "../utils/APIRoutes";
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import "../Styles/Nursery.css";
-import NavbarWithLogin from "./NavbarWithLogin";
+import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 
 export default function Nursery() {
@@ -30,7 +30,7 @@ export default function Nursery() {
 
   return (
     <>
-      <NavbarWithLogin />
+      <Navbar />
       <div className="container-fluid">
         {/* search bar */}
         <div>

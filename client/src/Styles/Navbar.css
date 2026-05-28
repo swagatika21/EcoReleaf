@@ -1,224 +1,286 @@
-/* NAVBAR */
-
-.eco-nav {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 14px 28px;
-
-  backdrop-filter: blur(10px);
-  background: rgba(1, 30, 49, 0.92);
-
-  color: white;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+/* ─────────────────────────────────────────
+   Shell & Core Variables
+───────────────────────────────────────── */
+:root {
+  --nav-active: #22c55e;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* BRAND */
+/* Default State (Transparent - assumes light hero background) */
+.eco-nav {
+  --nav-bg: transparent;
+  --nav-text: #374151;         /* Dark text for white background */
+  --nav-brand: #2c5643;        /* Near black */
+  --nav-hover: #16a34a;        /* Darker green for hover on light */
+  --hamburger: #111827;
+  --nav-border: transparent;
+  --nav-shadow: none;
+  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  height: 64px;
+  font-family: var(--font-body, system-ui, sans-serif);
+  
+  background: var(--nav-bg);
+  box-shadow: var(--nav-shadow);
+  border-bottom: 1px solid var(--nav-border);
+  transition: all 0.4s ease;
+}
 
+/* ── Solid state (scrolled / non-hero pages) ── */
+/* Switches to a sleek dark mode to contrast against white pages */
+.eco-nav--solid {
+  --nav-bg: #0a0f0d;           /* Deep dark background */
+  --nav-text: rgba(240, 253, 244, 0.85); /* Light text */
+  --nav-brand: #ffffff;        /* Pure white */
+  --nav-hover: #4ade80;        /* Brighter green for dark bg */
+  --hamburger: #ffffff;
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --nav-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─────────────────────────────────────────
+   Brand
+───────────────────────────────────────── */
 .eco-nav-brand {
   display: flex;
   align-items: center;
   gap: 8px;
-
   text-decoration: none;
-  color: white;
+  font-family: var(--font-display, inherit);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--nav-brand);
+  letter-spacing: -0.01em;
+  transition: color 0.4s ease, opacity 0.2s;
+}
 
-  font-size: 22px;
-  font-weight: bold;
+.eco-nav-brand:hover {
+  opacity: 0.8;
 }
 
 .eco-nav-brand-icon {
-  font-size: 24px;
-  color: #22c55e;
+  color: var(--nav-active);
+  font-size: 20px;
+  animation: sway 3.5s ease-in-out infinite;
+  transform-origin: bottom center;
 }
 
-/* NAV LINKS */
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(8deg); }
+}
 
+/* ─────────────────────────────────────────
+   Nav list & Links
+───────────────────────────────────────── */
 .eco-nav-list {
   list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   align-items: center;
-  gap: 36px;   /* increased spacing */
+  gap: 24px;
 }
 
-/* LINKS */
+/* Clean text-only links */
 .eco-nav-link {
   display: flex;
   align-items: center;
-  gap: 10px;
-
-  padding: 10px 16px;
-  border-radius: 10px;
-
-  min-width: 120px; /* keeps spacing consistent */
-  justify-content: center;
-
-  transition: all 0.25s ease;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--nav-text);
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.25s var(--ease);
+  white-space: nowrap;
 }
-.eco-nav-link:hover {
-  background: white;
-  color: #011e31;
-  border: none;
-}
+
 .eco-nav-link i {
-  background: rgba(255,255,255,0.1);
-  padding: 6px;
-  border-radius: 6px;
+  font-size: 14px;
+  transition: transform 0.25s var(--ease);
 }
 
-/* ACTIVE LINK */
+/* Hover effects without background boxes */
+.eco-nav-link:hover {
+  color: var(--nav-hover);
+}
+
+.eco-nav-link:hover i {
+  transform: scale(1.15) translateY(-1px);
+}
 
 .eco-nav-link--active {
-  color: white;
-  padding: 2px;
-  border: none;
-  background-color: none;
+  color: var(--nav-active);
+  font-weight: 600;
 }
 
-/* LOGOUT */
+.eco-nav-link--active i {
+  color: var(--nav-active);
+}
 
+/* ─────────────────────────────────────────
+   Logout Button
+───────────────────────────────────────── */
 .eco-nav-logout {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #ef4444; 
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  padding: 0;
+}
 
-  padding: 10px 16px;
-  border-radius: 10px;
-
-  font-size: 15px;
+.eco-nav-logout i {
+  font-size: 14px;
+  transition: transform 0.25s var(--ease);
 }
 
 .eco-nav-logout:hover {
-  background: white;
-  color: #011e31;
+  color: #f87171; /* Slightly brighter red on hover */
 }
 
-/* HAMBURGER */
-
-.eco-nav-hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-
-  background: none;
-  border: none;
-  cursor: pointer;
+.eco-nav-logout:hover i {
+  transform: translateX(3px);
 }
 
-.eco-nav-hamburger span {
-  width: 24px;
-  height: 3px;
-  background: white;
-
-  border-radius: 2px;
-
-  transition: all 0.3s ease;
-}
-
-/* HAMBURGER ANIMATION */
-
-.eco-nav-hamburger--open span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.eco-nav-hamburger--open span:nth-child(2) {
-  opacity: 0;
-}
-
-.eco-nav-hamburger--open span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
-
-/* MOBILE */
-
-@media (max-width: 768px) {
-
-  .eco-nav-hamburger {
-    display: flex;
-  }
-
-  .eco-nav-list {
-    position: absolute;
-    top: 65px;
-    left: 0;
-
-    width: 100%;
-
-    flex-direction: column;
-
-    background: rgba(1, 30, 49, 0.98);
-
-    padding: 20px 0;
-
-    display: none;
-  }
-
-  .eco-nav-list--open {
-    display: flex;
-  }
-
-  .eco-nav-link,
-  .eco-nav-logout {
-    justify-content: center;
-    font-size: 16px;
-  }
-
-}
-/* ── Add these to the bottom of your existing Navbar.css ── */
-
-/* Auth group — wraps Login + Sign Up side by side */
+/* ─────────────────────────────────────────
+   Auth group & Sign Up Button
+───────────────────────────────────────── */
 .eco-nav-auth {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 20px;
   margin-left: 8px;
 }
 
-/* Sign Up — filled green pill */
 .eco-nav-signup {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 16px;
-  border-radius: 8px;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 6px;
   background: var(--nav-active);
-  color: #0a0f0d;
-  font-family: var(--font-body);
-  font-size: 13px;
+  color: #0a0f0d !important; /* Always dark text inside the button */
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.25s var(--ease);
   white-space: nowrap;
-  border: 1px solid transparent;
 }
 
 .eco-nav-signup:hover {
-  background: #16a34a;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
+  background: var(--nav-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
 }
 
-/* Mobile: stack auth items full-width */
+/* ─────────────────────────────────────────
+   Hamburger (Mobile)
+───────────────────────────────────────── */
+.eco-nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.eco-nav-hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--hamburger);
+  border-radius: 2px;
+  transition: all 0.3s var(--ease);
+  transform-origin: center;
+}
+
+.eco-nav-hamburger--open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.eco-nav-hamburger--open span:nth-child(2) { opacity: 0; }
+.eco-nav-hamburger--open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ─────────────────────────────────────────
+   Page offset
+───────────────────────────────────────── */
+.eco-page-offset {
+  padding-top: 64px;
+}
+
+/* ─────────────────────────────────────────
+   Responsive (Mobile Menu)
+───────────────────────────────────────── */
 @media (max-width: 768px) {
+  .eco-nav-hamburger { 
+    display: flex; 
+  }
+
+  .eco-nav-list {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0; 
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    /* Mobile menu always dark to ensure readability */
+    background: #0a0f0d;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    
+    padding: 20px 28px;
+    gap: 20px;
+    z-index: 99;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+    animation: slideDown 0.3s var(--ease) both;
+  }
+
+  /* Force light text in mobile menu since background is dark */
+  .eco-nav-list .eco-nav-link {
+    color: rgba(240, 253, 244, 0.85);
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .eco-nav-list--open { 
+    display: flex; 
+  }
+
   .eco-nav-auth {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
     margin-left: 0;
-    gap: 4px;
-    margin-top: 4px;
+    margin-top: 8px;
+    width: 100%;
+    gap: 20px;
   }
 
   .eco-nav-signup {
-    padding: 11px 16px;
-    font-size: 14px;
-    border-radius: 10px;
-    justify-content: flex-start;
+    width: 100%;
+    justify-content: center;
   }
 }

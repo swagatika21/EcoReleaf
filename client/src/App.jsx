@@ -12,12 +12,14 @@ import NurseryProfile from "./Components/NurseryProfile";
 import WishList from "./Components/WishList";
 import NurseryDetails from "./Components/NurseryDetails";
 import PollutionHistory from "./Components/PollutionHistory"; // Import the PollutionHistory component
+import About from "./Components/About";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Landing />} />
+        <Route exact path="/about" element={<About />} />
         <Route exact path="/signup" element={<UserDet />} />
         <Route  path="/login" element={<Login />} />
         <Route exact path="/nurserysignup" element={<NurseryDet />} />

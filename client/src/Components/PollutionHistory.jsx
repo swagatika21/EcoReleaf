@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Chart from "chart.js/auto";
-import NavbarWithLogin from "./NavbarWithLogin";
+import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import "../Styles/PollutionHistory.css";
 
@@ -122,7 +122,7 @@ const PollutionHistory = () => {
 
   return (
     <>
-      <NavbarWithLogin />
+      <Navbar />
 
       <main className="ph-page">
         {/* ── Page header ── */}

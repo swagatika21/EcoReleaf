@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import NavbarWithLogin from "./NavbarWithLogin";
+import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import "../Styles/Wishlist.css";
 import { useNavigate } from "react-router-dom";
@@ -41,7 +41,7 @@ const WishList = () => {
   if (wishlistItems.length === 0) {
     return (
       <>
-        <NavbarWithLogin />
+        <Navbar />
         <main className="wl-page">
           <div className="wl-empty">
             <img src="../Images/heart.png" alt="Empty wishlist" className="wl-empty-img" />
@@ -61,7 +61,7 @@ const WishList = () => {
 
   return (
     <>
-      <NavbarWithLogin />
+      <Navbar />
 
       <main className="wl-page">
         {/* ── Header ── */}

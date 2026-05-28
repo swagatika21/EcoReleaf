@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState, useMemo } from "react";
-// import "../Styles/Nursery.css";
-import NavbarWithLogin from "./NavbarWithLogin";
+import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { nGetAllRoute } from "../utils/APIRoutes";
 import { OPENWEATHER_API_KEY } from "../utils/config";
+import "../Styles/Nursery.css";
+
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const R = 6371;
@@ -137,7 +138,7 @@ const Nursery = () => {
   if (error) {
     return (
       <>
-        <NavbarWithLogin />
+        <Navbar />
         <main className="nur-page">
           <div className="nur-state-card">
             <div className="nur-state-icon">⚠️</div>
@@ -154,7 +155,7 @@ const Nursery = () => {
 
   return (
     <>
-      <NavbarWithLogin />
+      <Navbar />
       <main className="nur-page">
 
         {/* ── Header ── */}

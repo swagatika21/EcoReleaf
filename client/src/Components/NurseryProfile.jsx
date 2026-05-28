@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import "../Styles/Nurseryprofile.css";
 import { useNavigate } from "react-router-dom";
-// import Navbar from "./Navbar";
-import NavbarWithLogin from "./NavbarWithLogin";
+import Navbar from "./Navbar";
 
 export default function NurseryProfile() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ export default function NurseryProfile() {
 
   return (
     <>
-      <NavbarWithLogin />
+      <Navbar />
       <h3 className="profile-head">Your Nursery Profile</h3>
       <div className="profile-container">
         <div className="profile-image-container">

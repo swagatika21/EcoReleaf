@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import "../Styles/NurseryDetails.css";
-import NavbarWithLogin from "./NavbarWithLogin";
+import Navbar from "./Navbar";
 import { useParams, useNavigate } from "react-router-dom";
 import { getNurseryByIdRoute } from "../utils/APIRoutes";
 
@@ -62,7 +62,7 @@ const NurseryDetails = () => {
 
   return (
     <>
-      <NavbarWithLogin />
+      <Navbar  />
       <div className="Nursery-det-container">
         <div className="nursery-img">
           <img src="../Images/dam.png" alt="plant" />

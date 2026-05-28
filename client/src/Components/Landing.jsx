@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../Styles/Landing.css";
 import ProdDesc from "./ProdDesc";
 import Footer from "./Footer";
-import NavbarWithoutLogin from "./NavbarWithoutLogin";
-import NavbarWithLogin from "./NavbarWithLogin";
+import Navbar from "./Navbar";
 import Context from "../context/Context";
 
 const FEATURES = [
@@ -35,7 +34,7 @@ function Landing() {
 
   return (
     <>
-      {user ? <NavbarWithLogin /> : <NavbarWithoutLogin />}
+      {user ? <Navbar /> : <Navbar />}
 
       {/* ── Hero ── */}
       <section className="hero" id="top">
@@ -58,7 +57,7 @@ function Landing() {
           </h1>
 
           <blockquote className="hero-quote">
-            "To plant a garden is to believe in tomorrow."
+            To plant a garden is to believe in tomorrow.
           </blockquote>
 
           <p className="hero-sub">
